@@ -1,85 +1,76 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
-
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+  api-gateway:
+    build: ./api-gateway
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/app
     environment:
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/
-      - REDIS_URI=redis://redis:6379
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - REDIS_HOST=redis
     depends_on:
-      - mongodb
       - redis
+      - auth-service
+      - restaurant-service
+      - preference-service
+      - review-service
 
-  crawler:
-    build:
-      context: ./data-crawler
-      dockerfile: Dockerfile
-    volumes:
-      - ./data-crawler:/app
+  auth-service:
+    build: ./backend
+    ports:
+      - "8001:8001"
     environment:
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/
-      - REDIS_URI=redis://redis:6379
-      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
-      - YELP_API_KEY=${YELP_API_KEY}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SERVICE_NAME=auth-service
+      - PORT=8001
     depends_on:
-      - mongodb
-      - redis
+      - postgres
 
-  celery_worker:
-    build:
-      context: ./data-crawler
-      dockerfile: Dockerfile
-    command: celery -A src.tasks.crawler_tasks worker --loglevel=info
-    volumes:
-      - ./data-crawler:/app
+  restaurant-service:
+    build: ./backend
+    ports:
+      - "8002:8002"
     environment:
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/
-      - REDIS_URI=redis://redis:6379
-      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
-      - YELP_API_KEY=${YELP_API_KEY}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SERVICE_NAME=restaurant-service
+      - PORT=8002
     depends_on:
-      - mongodb
-      - redis
+      - postgres
 
-  celery_beat:
-    build:
-      context: ./data-crawler
-      dockerfile: Dockerfile
-    command: celery -A src.tasks.crawler_tasks beat --loglevel=info
-    volumes:
-      - ./data-crawler:/app
+  preference-service:
+    build: ./backend
+    ports:
+      - "8003:8003"
     environment:
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/
-      - REDIS_URI=redis://redis:6379
+      - SERVICE_NAME=preference-service
+      - PORT=8003
     depends_on:
-      - mongodb
-      - redis
+      - postgres
+
+  review-service:
+    build: ./backend
+    ports:
+      - "8004:8004"
+    environment:
+      - SERVICE_NAME=review-service
+      - PORT=8004
+    depends_on:
+      - postgres
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=smartdine
+      - POSTGRES_PASSWORD=smartdine
+      - POSTGRES_DB=smartdine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  mongodb_data:
+  postgres_data:
   redis_data: 
