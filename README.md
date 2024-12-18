@@ -17,6 +17,15 @@
    - Smooth left-swipe transitions between questions
    - Maximum 3 selections for quick decision-making
 
+   ### Screenshots:
+   #### Home Screen
+   ![Home Screen](docs/images/home-page.png)
+   
+   #### Selection Flow
+   ![Selection Step 1](docs/images/selection-page-one-pop-up.png)
+   ![Selection Step 2](docs/images/selection-screen-all-pop-up.png)
+   ![Restaurant Result](docs/images/restaurant-intro.png)
+
 2. **Restaurant Review & Rating System**
    - Grid-style layout similar to Yelp
    - Visual-first approach with restaurant photos
@@ -24,12 +33,26 @@
    - Filter and sort capabilities
    - Interactive review cards with expandable details
 
+   ### Screenshots:
+   #### Reviews Grid
+   ![Reviews Grid](docs/images/restaurant-reviews.png)
+   
+   #### Filtered Reviews
+   ![Filtered Reviews](docs/images/filtered-restaurant-reviews.png)
+
 3. **User Profile & Preferences**
    - Personal account management
    - Customizable dining preferences
    - Review history and favorites
    - Dietary restrictions and preferences storage
    - Account settings and notifications
+
+   ### Screenshots:
+   #### Profile Page
+   ![Profile Page](docs/images/user-profile.png)
+   
+   #### Preferences Settings
+   ![Preferences Settings](docs/images/preferences-settings.png)
 
 4. **Dynamic Restaurant Labeling**  
    - Collects reviews and metadata from Google Maps, Yelp, and other third-party platforms.  
