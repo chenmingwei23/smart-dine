@@ -1,0 +1,63 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches:
+      - mainline
+      - master
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check Required Reviews
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            
+            const approvals = reviews.filter(review => review.state === 'APPROVED').length;
+            if (approvals < 1) {
+              core.setFailed('At least one approval is required to merge this pull request');
+            }
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend/web
+          npm install
+          
+      - name: Run Frontend Tests
+        run: |
+          cd frontend/web
+          npm test
+          
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          python -m pip install -r requirements.txt
+          
+      - name: Run Backend Tests
+        run: |
+          cd backend
+          python -m pytest 

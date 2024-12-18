@@ -1,0 +1,15 @@
+# These owners will be the default owners for everything in the repo
+* @rayc9823
+
+# Frontend code owners
+/frontend/ @rayc9823
+
+# Backend code owners
+/backend/ @rayc9823
+
+# Infrastructure code owners
+/infrastructure/ @rayc9823
+
+# Documentation owners
+/docs/ @rayc9823
+*.md @rayc9823 
