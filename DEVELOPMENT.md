@@ -5,12 +5,13 @@
 - Node.js 14+
 - Docker
 - AWS CLI configured
-- Git for Windows (with Git Bash)
-- PowerShell 5.1 or higher
+- Git
 
 ## Package Setup
 
 ### Backend Services Setup
+
+#### Windows
 ```powershell
 # Create and activate virtual environment
 python -m venv .venv
@@ -18,7 +19,20 @@ python -m venv .venv
 
 # Core Dependencies
 pip install fastapi uvicorn pydantic
+```
 
+#### Unix/macOS
+```bash
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Core Dependencies
+pip install fastapi uvicorn pydantic
+```
+
+### Common Dependencies
+```bash
 # Database Dependencies
 pip install motor  # MongoDB async driver
 pip install redis  # For rate limiting and caching
@@ -37,12 +51,21 @@ pip install python-dotenv  # Environment variables
 ```
 
 ### Frontend Setup
+
+#### Windows
 ```powershell
 cd frontend/web
-
-# Install dependencies
 npm install
+```
 
+#### Unix/macOS
+```bash
+cd frontend/web
+npm install
+```
+
+### Common Frontend Dependencies
+```bash
 # TypeScript dependencies
 npm install --save-dev typescript @types/node @types/react
 npm install axios @types/axios
@@ -57,43 +80,74 @@ npm install axios @types/axios
 ```
 
 ### Docker Services
+
+#### Windows
 ```powershell
 # Start all services
 docker-compose up -d
 
-# Individual services can be started with:
+# Individual services
 docker-compose up -d redis
 docker-compose up -d postgres
 ```
 
+#### Unix/macOS
+```bash
+# Start all services
+docker compose up -d
+
+# Individual services
+docker compose up -d redis
+docker compose up -d postgres
+```
+
 ## Initial Setup
+
+#### Windows
 ```powershell
 # Clone the repository
 git clone https://github.com/yourusername/smartdine.git
 cd smartdine
+```
 
-# Run setup script (using Git Bash or WSL)
-bash scripts/setup.sh
+#### Unix/macOS
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/smartdine.git
+cd smartdine
 ```
 
 ## Development Workflow
 
 ### Starting Local Development Environment
-```powershell
-# Start local services
-docker-compose up -d
 
+#### Windows
+```powershell
 # Start backend API
 cd backend/api
 .\.venv\Scripts\Activate.ps1
 uvicorn src.main:app --reload
 
-# Start frontend (in another PowerShell window)
+# Start frontend (in another window)
+cd frontend/web
+npm run dev
+```
+
+#### Unix/macOS
+```bash
+# Start backend API
+cd backend/api
+source .venv/bin/activate
+uvicorn src.main:app --reload
+
+# Start frontend (in another terminal)
 cd frontend/web
 npm run dev
 ```
 
 ### Running Tests
+
+#### Windows
 ```powershell
 # Backend tests
 cd backend/api
@@ -106,9 +160,60 @@ cd frontend/web
 npm test
 ```
 
-## API Gateway Implementation Considerations
+#### Unix/macOS
+```bash
+# Backend tests
+cd backend/api
+source .venv/bin/activate
+pytest
+deactivate
 
-### Performance and Scaling
+# Frontend tests
+cd frontend/web
+npm test
+```
+
+### Environment Variables
+
+#### Windows
+```powershell
+# Create .env file
+Copy-Item .env.example .env
+```
+
+#### Unix/macOS
+```bash
+# Create .env file
+cp .env.example .env
+```
+
+### Common Issues and Solutions
+
+#### Windows
+1. **Execution Policy**
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+2. **Path Separators**
+- Use backslashes (`\`) for paths
+
+#### Unix/macOS
+1. **Permission Issues**
+```bash
+# Fix script permissions
+chmod +x scripts/*.sh
+
+# Fix virtual environment permissions
+chmod -R 755 .venv/bin
+```
+
+2. **Path Separators**
+- Use forward slashes (`/`) for paths
+
+### API Gateway Implementation Considerations
+
+#### Performance and Scaling
 1. **Current Implementation (FastAPI)**
    - Pros:
      - Fast enough for initial scale (~30k req/s)
@@ -137,9 +242,7 @@ npm test
      - Service discovery
      - Circuit breaking
 
-### Frontend TypeScript Setup
-
-#### Common Issues and Solutions
+#### Frontend TypeScript Setup
 
 1. **Axios Type Declarations**
    ```bash
