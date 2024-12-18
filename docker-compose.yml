@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - mongodb
+      - redis
+
+  crawler:
+    build:
+      context: ./data-crawler
+      dockerfile: Dockerfile
+    volumes:
+      - ./data-crawler:/app
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/
+      - REDIS_URI=redis://redis:6379
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      - YELP_API_KEY=${YELP_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - mongodb
+      - redis
+
+  celery_worker:
+    build:
+      context: ./data-crawler
+      dockerfile: Dockerfile
+    command: celery -A src.tasks.crawler_tasks worker --loglevel=info
+    volumes:
+      - ./data-crawler:/app
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/
+      - REDIS_URI=redis://redis:6379
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      - YELP_API_KEY=${YELP_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - mongodb
+      - redis
+
+  celery_beat:
+    build:
+      context: ./data-crawler
+      dockerfile: Dockerfile
+    command: celery -A src.tasks.crawler_tasks beat --loglevel=info
+    volumes:
+      - ./data-crawler:/app
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - mongodb
+      - redis
+
+volumes:
+  mongodb_data:
+  redis_data: 
