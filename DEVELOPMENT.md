@@ -48,6 +48,82 @@ cd frontend/web
 npm test
 ```
 
+## API Gateway Implementation Considerations
+
+### Performance and Scaling
+1. **Current Implementation (FastAPI)**
+   - Pros:
+     - Fast enough for initial scale (~30k req/s)
+     - Easy to maintain and modify
+     - Team familiarity with Python
+     - Strong type checking with Pydantic
+   - Cons:
+     - Lower raw performance compared to Go
+     - Higher memory usage
+
+2. **Scaling Strategy**
+   - Short term: Use FastAPI + AWS API Gateway
+   - Medium term: AWS API Gateway for core functions
+   - Long term options:
+     - Move to Go for better performance
+     - Use managed solutions (Kong/Traefik)
+     - Full AWS API Gateway + Lambda
+
+3. **AWS Integration**
+   - AWS API Gateway can handle:
+     - Authentication
+     - Rate limiting
+     - Basic routing
+   - Our FastAPI implementation handles:
+     - Custom business logic
+     - Service discovery
+     - Circuit breaking
+
+### Frontend TypeScript Setup
+
+#### Common Issues and Solutions
+
+1. **Axios Type Declarations**
+   ```bash
+   # Error: Cannot find module 'axios' or its corresponding type declarations
+   
+   # Solution: Install axios types
+   npm install axios @types/axios
+   ```
+
+2. **API Client Export**
+   ```typescript
+   // Error: Module './client' declares 'APIClient' locally, but it is not exported
+   
+   // Solution: Update client.ts to export the class
+   export class APIClient {
+     // ... existing implementation
+   }
+   ```
+
+3. **TypeScript Configuration**
+   ```json
+   // tsconfig.json
+   {
+     "compilerOptions": {
+       "esModuleInterop": true,
+       "allowSyntheticDefaultImports": true,
+       "skipLibCheck": true
+     }
+   }
+   ```
+
+4. **Package Dependencies**
+   ```json
+   // package.json
+   {
+     "dependencies": {
+       "axios": "^1.6.2",
+       "@types/axios": "^0.14.0"
+     }
+   }
+   ```
+
 ### Virtual Environment Management
 All Python dependencies are installed in local `.venv` directories:
 - Backend API: `backend/api/.venv/`

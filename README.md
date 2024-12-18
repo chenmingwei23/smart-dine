@@ -100,24 +100,49 @@ flowchart TD
         APIClient --> StateManagement
     end
 
+    subgraph APIGatewayLayer["API Gateway Layer"]
+        direction TB
+        APIGatewayService["API Gateway Service"]
+        subgraph GatewayFeatures["Gateway Features"]
+            direction TB
+            Authentication["Authentication/Authorization"]
+            RateLimiting["Rate Limiting"]
+            Caching["Response Caching"]
+            LoadBalancing["Load Balancing"]
+            CircuitBreaker["Circuit Breaker"]
+            Logging["Request Logging"]
+        end
+        APIGatewayService --> Authentication
+        APIGatewayService --> RateLimiting
+        APIGatewayService --> Caching
+        APIGatewayService --> LoadBalancing
+        APIGatewayService --> CircuitBreaker
+        APIGatewayService --> Logging
+    end
+
     subgraph AWSCloud["AWS Cloud"]
         direction TB
         CloudFront["CloudFront CDN"]
         
-        subgraph APILayer["API Layer"]
-            APIGateway["API Gateway"]
-            Cognito["Cognito Auth"]
-        end
-        
-        subgraph ComputeLayer["Compute Layer"]
-            Lambda["Lambda Functions"]
-            StepFunctions["Step Functions"]
+        subgraph ServiceLayer["Microservices Layer"]
+            AuthService["Auth Service"]
+            RestaurantService["Restaurant Service"]
+            PreferenceService["Preference Service"]
+            ReviewService["Review Service"]
+            RecommendationService["Recommendation Service"]
         end
         
         subgraph DataLayer["Data Layer"]
             DynamoDB["DynamoDB"]
             S3["S3 Storage"]
             ElasticCache["ElastiCache"]
+            
+            subgraph DataPartitions["Data Partitions"]
+                UserDB["User Data"]
+                RestaurantDB["Restaurant Data"]
+                ReviewDB["Review Data"]
+                PreferenceDB["Preference Data"]
+            end
         end
         
         subgraph BackgroundJobs["Background Jobs"]
@@ -132,18 +157,20 @@ flowchart TD
     end
     
     FrontendLayer --> CloudFront
-    CloudFront --> APIGateway
-    APIGateway --- Cognito
-    APIGateway --> Lambda
-    Lambda --- DynamoDB
-    Lambda --- S3
-    Lambda --- ElasticCache
+    CloudFront --> APIGatewayLayer
+    APIGatewayLayer --> ServiceLayer
     
-    EventBridge --> StepFunctions
-    StepFunctions --> Scrapers
+    AuthService --> UserDB
+    RestaurantService --> RestaurantDB
+    ReviewService --> ReviewDB
+    PreferenceService --> PreferenceDB
+    RecommendationService --> RestaurantDB
+    RecommendationService --> PreferenceDB
+    
+    EventBridge --> Scrapers
     Scrapers --> SQS
     SQS --> DataProcessor
-    DataProcessor --> S3
+    DataProcessor --> RestaurantDB
 ```
 
 ## **Communication Flow**
