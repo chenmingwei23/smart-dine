@@ -1,72 +1,27 @@
 import create from 'zustand';
+import { SelectionState } from '../navigation/types';
 
-interface UserPreferences {
-  vegetarian: boolean;
-  notifications: boolean;
-  darkMode: boolean;
-  maxDistance: number;
-}
-
-interface UserStats {
-  reviewsCount: number;
-  favoritesCount: number;
-  visitsCount: number;
-}
-
-interface User {
-  name: string;
-  email: string;
-  avatar: string;
-  preferences: UserPreferences;
-  stats: UserStats;
-}
-
-interface SelectionState {
-  cuisine: string | null;
-  priceRange: string | null;
-  distance: number | null;
-}
-
-interface AppState {
-  // User state
-  user: User | null;
-  setUser: (user: User | null) => void;
-  
-  // Selection state
+interface StoreState {
   selectionState: SelectionState;
-  updateSelection: (key: keyof SelectionState, value: any) => void;
+  currentRestaurant: any;
+  updateSelection: (key: keyof SelectionState, value: string | number) => void;
   resetSelection: () => void;
-  
-  // Restaurant state
-  currentRestaurant: any | null;
   setCurrentRestaurant: (restaurant: any) => void;
 }
 
-const initialSelectionState: SelectionState = {
-  cuisine: null,
-  priceRange: null,
-  distance: null,
-};
-
-export const useStore = create<AppState>((set) => ({
-  // User state
-  user: null,
-  setUser: (user) => set({ user }),
-  
-  // Selection state
-  selectionState: initialSelectionState,
+export const useStore = create<StoreState>((set) => ({
+  selectionState: {
+    cuisine: undefined,
+    priceRange: undefined,
+    distance: undefined,
+  },
+  currentRestaurant: null,
   updateSelection: (key, value) => 
     set((state) => ({
-      selectionState: {
-        ...state.selectionState,
-        [key]: value,
-      },
+      selectionState: { ...state.selectionState, [key]: value }
     })),
   resetSelection: () => 
-    set({ selectionState: initialSelectionState }),
-  
-  // Restaurant state
-  currentRestaurant: null,
+    set({ selectionState: { cuisine: undefined, priceRange: undefined, distance: undefined } }),
   setCurrentRestaurant: (restaurant) => 
     set({ currentRestaurant: restaurant }),
 })); 

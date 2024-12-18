@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { StyleSheet } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import SelectionScreen from '../screens/SelectionScreen';
 import ResultScreen from '../screens/ResultScreen';
@@ -15,11 +16,11 @@ const screenOptions = {
   },
   headerTintColor: '#fff',
   headerTitleStyle: {
-    fontWeight: 'bold',
+    fontWeight: '700' as const,
   },
   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
   gestureEnabled: true,
-  gestureDirection: 'horizontal',
+  gestureDirection: 'horizontal' as const,
 };
 
 export default function RootNavigator() {

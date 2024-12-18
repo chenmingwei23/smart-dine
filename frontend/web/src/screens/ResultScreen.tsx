@@ -7,6 +7,17 @@ import { useStore } from '../store';
 
 type ResultScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Result'>;
 
+interface Restaurant {
+  name: string;
+  cuisine: string;
+  rating: number;
+  priceLevel: string;
+  distance: string;
+  image: string;
+  tags: string[];
+  openNow: boolean;
+}
+
 export default function ResultScreen() {
   const navigation = useNavigation<ResultScreenNavigationProp>();
   const { currentRestaurant, setCurrentRestaurant, selectionState } = useStore();
@@ -84,7 +95,7 @@ export default function ResultScreen() {
           </View>
 
           <View style={styles.tagsContainer}>
-            {currentRestaurant.tags.map((tag, index) => (
+            {currentRestaurant.tags.map((tag: string, index: number) => (
               <View key={index} style={styles.tag}>
                 <Text style={styles.tagText}>{tag}</Text>
               </View>

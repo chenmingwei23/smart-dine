@@ -1,7 +1,13 @@
+export interface SelectionState {
+  cuisine?: string;
+  priceRange?: string;
+  distance?: number;
+}
+
 export type RootStackParamList = {
   Home: undefined;
   Selection: undefined;
-  Result: { selections: string[] };
+  Result: { selections: SelectionState };
   Reviews: undefined;
   Profile: undefined;
 };

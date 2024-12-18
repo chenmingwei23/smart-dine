@@ -10,7 +10,7 @@ interface RequestConfig extends AxiosRequestConfig {
     skipCache?: boolean;
 }
 
-class APIClient {
+export class APIClient {
     private client: AxiosInstance;
     private cache: Map<string, { data: any; timestamp: number }>;
     private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
