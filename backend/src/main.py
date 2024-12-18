@@ -1,10 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from .api import auth, restaurants
 from .services.database import database
 import os
 
-app = FastAPI(title=f"SmartDine {os.getenv('SERVICE_NAME', 'Service')}")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await database.connect_to_database()
+    yield
+    # Shutdown
+    await database.close_database_connection()
+
+app = FastAPI(title=f"SmartDine {os.getenv('SERVICE_NAME', 'Service')}", lifespan=lifespan)
 
 # Configure CORS - this will be handled by API Gateway in production
 if os.getenv("ENVIRONMENT") == "development":
@@ -24,14 +33,6 @@ if service_name == "auth-service":
 elif service_name == "restaurant-service":
     app.include_router(restaurants.router, tags=["restaurants"])
 # Add other service routers as needed
-
-@app.on_event("startup")
-async def startup():
-    await database.connect_to_database()
-
-@app.on_event("shutdown")
-async def shutdown():
-    await database.close_database_connection()
 
 @app.get("/health")
 async def health_check():
