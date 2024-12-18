@@ -8,6 +8,64 @@
 - Git for Windows (with Git Bash)
 - PowerShell 5.1 or higher
 
+## Package Setup
+
+### Backend Services Setup
+```powershell
+# Create and activate virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Core Dependencies
+pip install fastapi uvicorn pydantic
+
+# Database Dependencies
+pip install motor  # MongoDB async driver
+pip install redis  # For rate limiting and caching
+
+# Authentication & Security
+pip install python-jose[cryptography]  # JWT handling
+pip install passlib[bcrypt]  # Password hashing
+pip install python-multipart  # Form data handling
+
+# HTTP Client
+pip install httpx  # Async HTTP client
+
+# Configuration
+pip install pydantic-settings  # Settings management
+pip install python-dotenv  # Environment variables
+```
+
+### Frontend Setup
+```powershell
+cd frontend/web
+
+# Install dependencies
+npm install
+
+# TypeScript dependencies
+npm install --save-dev typescript @types/node @types/react
+npm install axios @types/axios
+
+# Update package.json if needed:
+{
+  "dependencies": {
+    "axios": "^1.6.2",
+    "@types/axios": "^0.14.0"
+  }
+}
+```
+
+### Docker Services
+```powershell
+# Start all services
+docker-compose up -d
+
+# Individual services can be started with:
+docker-compose up -d redis
+docker-compose up -d postgres
+```
+
 ## Initial Setup
 ```powershell
 # Clone the repository
