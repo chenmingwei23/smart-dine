@@ -1,0 +1,106 @@
+[
+  {
+    "name": "The Nocturne",
+    "rating": 4.9,
+    "review_count": 91,
+    "address": "Bar ·  · 557 Crown St",
+    "details": "Open ⋅ Closes 12 am",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.583275",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Saga Bar",
+    "rating": 4.4,
+    "review_count": 499,
+    "address": "Cocktail bar ·  · 49 Goold St",
+    "details": "Open ⋅ Closes 10:30 pm",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.622274",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bar Conte",
+    "rating": 4.8,
+    "review_count": 400,
+    "address": "Bar ·  · 340 Riley St",
+    "details": "Open ⋅ Closes 12 am",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.662275",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Li'l Darlin Surry Hills",
+    "rating": 4.4,
+    "review_count": 1110,
+    "address": "Bar ·  · 420 Elizabeth St",
+    "details": "Lively bar/restaurant with pizza & tapas",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.702275",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Bearded Tit",
+    "rating": 4.6,
+    "review_count": 575,
+    "address": "Bar ·  · 183 Regent St",
+    "details": "Lively, offbeat watering hole & gallery",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.742275",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "THE BEER BAR",
+    "rating": 4.7,
+    "review_count": 217,
+    "address": "Bar ·  · Entrance on, 29-31 O'Riordan St",
+    "details": "Open ⋅ Closes 10 pm",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.778275",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Gin Lane",
+    "rating": 4.4,
+    "review_count": 763,
+    "address": "Cocktail bar ·  · 16A Kensington St",
+    "details": "Open ⋅ Closes 12 am",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.819275",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Arcadia",
+    "rating": 4.6,
+    "review_count": 420,
+    "address": "Bar ·  · 7 Cope St",
+    "details": "Casual locale for pub fare & cocktails",
+    "type": "bars",
+    "crawled_at": "2024-12-19T17:56:42.857274",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]
