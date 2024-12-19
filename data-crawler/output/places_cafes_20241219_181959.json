@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Grind Pantry",
+    "rating": 4.7,
+    "review_count": 213,
+    "address": "Cafe ·  · Shop 1/76 Mitchell Rd",
+    "details": "Open ⋅ Closes 9 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://grindpantry.com.au/",
+    "phone": "(02) 9310 5957",
+    "reviews": [
+      {
+        "reviewer": "Helen Pontikis",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "We had our company Christmas lunch here and it was an absolute pleasure. Beautifully cooked food, generous servings. The staff were friendly and efficient. Thank you for looking after us!",
+        "date": "6 days ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:17:48.537967",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Grounds of Alexandria",
+    "rating": 4.0,
+    "review_count": 5606,
+    "address": "Cafe ·  · 7a/2 Huntley St",
+    "details": "Coffee & rustic food in an old factory",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://www.thegrounds.com.au/",
+    "phone": "(02) 9699 2225",
+    "reviews": [
+      {
+        "reviewer": "Sylvia Pham",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "I’ve literally been here so many times; and it never disappoints me! the food, vibes and atmosphere is brilliantly perfect! I got to love the strawberry tart i had ordered, it was delicious and was a perfect sweet snack for my sweet tooth cravings! I also always love the installation here too; it’s always so pretty for photos! and i always end up with thousands of pictures!",
+        "date": "3 weeks ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:18:07.137408",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "That Place Next Door - TPND",
+    "rating": 4.7,
+    "review_count": 110,
+    "address": "Cafe ·  · Atlas Apartments, Power Building, Unit 1/11-15 Power Ave",
+    "details": "Open ⋅ Closes 9 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://www.thatplacenextdoor.com/",
+    "phone": "(02) 8399 0148",
+    "reviews": [
+      {
+        "reviewer": "Joe Hillier",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Fantastic cafe! Spoiled for choice in the Alexandria area when choosing a place to eat, however, TPND I have to say is the place to go. We've had the full English (includes beans) and the eggs Benedict many times and it's always very tasty, the service is also notch and incredibly friendly! Thoroughly recommend the bottomless brunch too (pictures attached).",
+        "date": "5 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:18:25.743447",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bitton Cafe and Restaurant",
+    "rating": 4.6,
+    "review_count": 1305,
+    "address": "Cafe ·  · 36/37A Copeland St",
+    "details": "Smart French-Australian cafe & grocer",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://www.bittongourmet.com.au/",
+    "phone": "(02) 9519 5111",
+    "reviews": [
+      {
+        "reviewer": "Alan Lau",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "We had a lunch at this lovely French restaurant. Excellent bakery, excellent food and service. Best butter and beef burger I have ever had in Sydney. Highly recommended.",
+        "date": "4 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:18:44.300820",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Cafe Kentaro",
+    "rating": 4.4,
+    "review_count": 732,
+    "address": "Cafe ·  · 616 Bourke St",
+    "details": "Open ⋅ Closes 9 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://cafekentaro.com.au/",
+    "phone": "0483 180 193",
+    "reviews": [
+      {
+        "reviewer": "Stacey Trock",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Beautiful Japanese-inspired cafe with indoor and outdoor seating.\n\nThe food was delicious and the cafe is open for dinner on limited evenings.\n\nTry the iced black sesame latte!",
+        "date": "6 days ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:19:02.726245",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Alchemy Polish Cafe Restaurant",
+    "rating": 4.6,
+    "review_count": 773,
+    "address": "Cafe ·  · 572 Crown St",
+    "details": "Polish cuisine in a quaint establishment",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://www.alchemy-restaurant.com/",
+    "phone": "(02) 9699 2455",
+    "reviews": [
+      {
+        "reviewer": "Aurorafae",
+        "reviewer_photo": null,
+        "rating": 3.0,
+        "text": "Edit: It is not the responsibility of the customer to find and see all information at every new and unfamiliar establishment, especially when it can be hard to find. Surcharges aren't mentioned on your website or online menu, and signage was NOT obvious in the restaurant. Instead of getting defensive, please learn some humility and take in the feedback for at least future customers before they doubtlessly start to have the same problems. Otherwise you're only reinforcing my original point.\nAlso, the expensiveness in general was a separate issue to the above (not part of the same, as your reply seems to indicate). That said, it is still a valid impression to have, especially after experiencing the dishes. I understand taking pride in what you serve, but please don't call customers' opinions 'inaccurate' just because it's not something you want to hear.\n----\n(Visit date: 19/10/2024)\n\nThe food was good quality, fresh, well-cooked, and overall quite nice; no doubt about it. The restaurant is clean and comfortable, the staff at least nice and friendly at first.\nStill, these things aren't enough to justify the exorbitant prices. Alchemy is EXPENSIVE for what they serve; let that be clear.\nBut that's not the main gripe I had or the reason why I had to post.\n\nI feel like I have to warn everyone about their hidden charges and costs, which I wish I saw in reviews myself before visiting.\n\nBoth staff members who interacted with us, the waiter and an older gentleman we believed may have been the owner, engaged in some deceptive behaviour:\n1. Not informing us of their Saturday surcharge until it was literally time to pay, when unlike Sundays and public holidays it's definitely not common practice\n2. Asking us if we wanted certain sides between dishes without mentioning any prices, giving the impression that they're complementary/free (e.g. the pickles. They turned out to be $13.50 -- for what turned out to be just 2 whole ones! And they were the cheapest item on our bill!)\nTo top it off, when we expressed surprise at the final bill and everything that contributed to it (we were polite, not even angry), seeing how quickly the staff dropped their veneer of friendliness was chilling and unforgettable.\n\nI'd originally wanted to come back to explore more Polish cuisine here, especially when the food seemed promising, but I wouldn't be comfortable doing so anymore. The Polish friend I came with doesn't want to return either. 10% surcharges may not seem like much, but when each item costs so much, they really add up. Also, such dishonesty shouldn't be encouraged anyway. I wouldn't recommend supporting their business unless they change.\n----\nFood-wise--\n\nRecommended:\n- Zurek/sour rye soup (best dish we had)\n- (Fried) Sauerkraut & mushroom pierogi (delicious, the flavour surprisingly deep)\n\nDecent:\n- (Fried) Potato & cheese pierogi\n- Golabki/cabbage rolls\n\nNot recommended:\n- Gonzo Pork Schnitzel (says 'cheese' in the description but is actually a blue cheese sauce, which didn't suit the schnitzel. Also didn't work with the pears; overall it tasted funky and disharmonic)\n- (Fried) Duck & apricot pierogi (apricot couldn't be tasted at all, the main flavour actually an alcoholic tang, which practically covered all of the duck. We wondered if the batch we had was actually off)",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:19:21.478446",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bubble Nini Cafe",
+    "rating": 4.1,
+    "review_count": 325,
+    "address": "Cafe ·  · 10 Ebsworth St",
+    "details": "Open ⋅ Closes 10:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://instagram.com/bubbleninicafe?igshid=OGQ5ZDc2ODk2ZA==",
+    "phone": "(02) 8021 7888",
+    "reviews": [
+      {
+        "reviewer": "Athena N S",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "The aesthetic of this cafe is so consistent and eye catching. Inside there’s a wall of books and a full length mirror with flowers around it, very cute spot for pictures. They also sell cute desserts and drinks.",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:19:40.312180",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Pastizzi Cafe - North King Street",
+    "rating": 4.6,
+    "review_count": 2116,
+    "address": "Cafe ·  · 109 King St",
+    "details": "Compact hangout for Maltese pastries",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://facebook.com/PastizziCafe/",
+    "phone": "(02) 9519 1063",
+    "reviews": [
+      {
+        "reviewer": "Alexander Howen",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Walking into the north end of King Street Newtown after a theatre outing looking for food is bit tricky. Six different restaurants told us the kitchen was closed. Night life is getting harder in Sydney.\n\nThen I remembered the Pastizzi Cafe. I have already written a couple of reviews of their cafe on the south end of King Street. Italian/Maltese hospitality is usually a winner. I thought, I bet they are open later than the others. I was right - their kitchen does not close until midnight.\n\nApart from the usual excellent pastizzi, their menu is ideal for a casual dinner with friends. Plenty of choice of wines and other drinks.\n\nThe photos with this review give you an idea of what some of our group enjoyed.\n\nThe white bait fritters served with a Greek style salad was my choice. The fritters were moist inside and not over fried. The dressing on the salad was a bit strong.\n\nThe four cheese gnocchi (anglo name here) was just so cheesy! The gnocchi were just right and the cheeses were a little over the top - but hey, that is what this dish is all about.\n\nI could not resist the chocolate zuccherato (I think I have the name right). Filled with a chocolate mousse style filling which should not need the cream on the side but oh well just go with it……\n\nThe staff were attentive and the service quick. There were not that many diners in that night so I wonder how the service would go when they are pumping.\n\nPastizzi Cafe is a great option for a late dinner. Now I am a fan of both Pastizzi Cafes - north and south.",
+        "date": "a week ago",
+        "likes": 0
+      }
+    ],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T18:19:59.001506",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]

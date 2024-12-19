@@ -1,0 +1,156 @@
+[
+  {
+    "name": "Grind Pantry",
+    "rating": 4.7,
+    "review_count": 213,
+    "address": "Cafe ·  · Shop 1/76 Mitchell Rd",
+    "details": "Open ⋅ Closes 9 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://grindpantry.com.au/",
+    "phone": "(02) 9310 5957",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:19:03.689741",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Grounds of Alexandria",
+    "rating": 4.0,
+    "review_count": 5606,
+    "address": "Cafe ·  · 7a/2 Huntley St",
+    "details": "Coffee & rustic food in an old factory",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://www.thegrounds.com.au/",
+    "phone": "(02) 9699 2225",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:19:24.474589",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "That Place Next Door - TPND",
+    "rating": 4.7,
+    "review_count": 110,
+    "address": "Cafe ·  · Atlas Apartments, Power Building, Unit 1/11-15 Power Ave",
+    "details": "Open ⋅ Closes 9 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://www.thatplacenextdoor.com/",
+    "phone": "(02) 8399 0148",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:19:45.332543",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bitton Cafe and Restaurant",
+    "rating": 4.6,
+    "review_count": 1305,
+    "address": "Cafe ·  · 36/37A Copeland St",
+    "details": "Smart French-Australian cafe & grocer",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://www.bittongourmet.com.au/",
+    "phone": "(02) 9519 5111",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:20:06.280623",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Cafe Kentaro",
+    "rating": 4.4,
+    "review_count": 732,
+    "address": "Cafe ·  · 616 Bourke St",
+    "details": "Open ⋅ Closes 9 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://cafekentaro.com.au/",
+    "phone": "0483 180 193",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:20:27.148923",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Alchemy Polish Cafe Restaurant",
+    "rating": 4.6,
+    "review_count": 773,
+    "address": "Cafe ·  · 572 Crown St",
+    "details": "Polish cuisine in a quaint establishment",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "http://www.alchemy-restaurant.com/",
+    "phone": "(02) 9699 2455",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:20:47.807399",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bubble Nini Cafe",
+    "rating": 4.1,
+    "review_count": 325,
+    "address": "Cafe ·  · 10 Ebsworth St",
+    "details": "Open ⋅ Closes 10:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.900827,
+      "longitude": 151.1744989
+    },
+    "opening_hours": null,
+    "website": "https://instagram.com/bubbleninicafe?igshid=OGQ5ZDc2ODk2ZA==",
+    "phone": "(02) 8021 7888",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T19:21:08.560289",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]

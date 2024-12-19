@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Urban Thai",
+    "rating": 4.7,
+    "review_count": 837,
+    "address": "Thai ·  · 3/7 Potter St",
+    "details": "Thai standards in an easygoing venue",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    },
+    "opening_hours": null,
+    "website": "https://www.urbanthaiwaterloo.com/",
+    "phone": "(02) 8394 9828",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:16:05.875512",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Yum Yai",
+    "rating": 4.3,
+    "review_count": 287,
+    "address": "Thai ·  · 403/249 George St",
+    "details": "Simple locale for traditional Thai food",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": null,
+    "phone": "(02) 9698 1211",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:16:26.336864",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Calico - Cafe, Restaurant, Pizza & Bar",
+    "rating": 4.7,
+    "review_count": 406,
+    "address": "Restaurant ·  · 146 Abercrombie St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "https://www.calicoredfern.com.au/?utm_source=google&utm_medium=organic&utm_campaign=gbp-listing",
+    "phone": "(02) 8384 9791",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:16:46.944218",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Mon Thai Eatery",
+    "rating": 4.6,
+    "review_count": 240,
+    "address": "Restaurant ·  · 779 Elizabeth St",
+    "details": "Open ⋅ Closes 9:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "https://www.facebook.com/Mon-Thai-Eatery-Zetland-352163118691492/",
+    "phone": "(02) 9698 6698",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:17:07.662391",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "NOUR",
+    "rating": 4.8,
+    "review_count": 2887,
+    "address": "Middle Eastern ·  · 3/490 Crown St",
+    "details": "Chic eatery with inventive Lebanese fare",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "https://www.noursydney.com/?utm_content=NOUR+-+Surry+Hills&utm_campaign=Google+My+Business&utm_medium=organic&utm_source=google&utm_term=plcid_8876915928515631771",
+    "phone": "(02) 9331 3413",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:17:28.353410",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Ester Restaurant",
+    "rating": 4.5,
+    "review_count": 1385,
+    "address": "Australian ·  · 46-52 Meagher St",
+    "details": "Eclectic flavour combos in a chic room",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "http://www.ester-restaurant.com.au/",
+    "phone": "(02) 8068 8279",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:17:49.011059",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Crystal Restaurant",
+    "rating": 4.4,
+    "review_count": 166,
+    "address": "Restaurant ·  · Meriton Retail Precinct Waterloo, Shop 1/1 Crystal St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "http://www.crystalrestaurantnbar.com/",
+    "phone": "0466 994 496",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:18:09.640624",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "KINDRED Restaurant",
+    "rating": 4.8,
+    "review_count": 1148,
+    "address": "Italian ·  · 137 Cleveland St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "http://www.kindredrestaurant.com.au/",
+    "phone": "(02) 8937 0530",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T19:18:30.453161",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]

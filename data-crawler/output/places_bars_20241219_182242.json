@@ -1,0 +1,250 @@
+[
+  {
+    "name": "The Nocturne",
+    "rating": 4.9,
+    "review_count": 91,
+    "address": "Bar ·  · 557 Crown St",
+    "details": "Open ⋅ Closes 12 am",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    },
+    "opening_hours": null,
+    "website": null,
+    "phone": "0433 648 613",
+    "reviews": [
+      {
+        "reviewer": "Zara Macquarie",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Amazing place! Stopped in and had a few cocktails. Great prices and amazing atmosphere! Jenny is a STAR! Amazing bar tender, always working and keeping the place spotless! We will be back! Highly recommend.",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:20:31.475368",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Saga Bar",
+    "rating": 4.4,
+    "review_count": 499,
+    "address": "Cocktail bar ·  · 49 Goold St",
+    "details": "Open ⋅ Closes 10:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.8854832,
+      "longitude": 151.1830631
+    },
+    "opening_hours": null,
+    "website": "http://www.sagabarsydney.com.au/",
+    "phone": "0497 454 222",
+    "reviews": [
+      {
+        "reviewer": "Landy Lan",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Amazing hidden bar. Me and my friend just wanna have a little drinks. We ordered the Truffle Fries and the Lavender Husk. The service is really friendly and sweet. I really enjoy the Bali style ambiance and vibe. Cheers to all of you.",
+        "date": "a week ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:20:50.224868",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bar Conte",
+    "rating": 4.8,
+    "review_count": 400,
+    "address": "Bar ·  · 340 Riley St",
+    "details": "Open ⋅ Closes 12 am",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8854832,
+      "longitude": 151.1830631
+    },
+    "opening_hours": null,
+    "website": "https://www.barconte.com.au/",
+    "phone": "(02) 7254 1170",
+    "reviews": [
+      {
+        "reviewer": "Hazel",
+        "reviewer_photo": null,
+        "rating": 4.0,
+        "text": "I've often passed by this place and admired its atmosphere, so I finally decided to visit. I tried the set menu, which was great value for money, and the atmosphere was fantastic. The eggplant was sourer than I expected, and the salad was too tough to eat, but from the cheese and bread to the dessert, it's worth a visit at least once.",
+        "date": "5 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:21:09.013452",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Li'l Darlin Surry Hills",
+    "rating": 4.4,
+    "review_count": 1110,
+    "address": "Bar ·  · 420 Elizabeth St",
+    "details": "Lively bar/restaurant with pizza & tapas",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.8854832,
+      "longitude": 151.1830631
+    },
+    "opening_hours": null,
+    "website": "http://lildarlinsurryhills.com.au/",
+    "phone": "(02) 8018 8926",
+    "reviews": [
+      {
+        "reviewer": "Nana in Sydney",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "I found Sydney's Best Cocktail Spots!\nfor a drink after finished work Love the vibes!\n\n$12.50 happy hour  for cocktails are a definite win.. Located in the heart of Surry Hills\n\nWent there with my mate on Tuesday after finished work\n✨Tacos Tuesdays ($12 Margaritas & $6 Tacos)\n\n✨ Happy Hour 4-6pm & daily specials ✨\n\nthe drinks were yummy and so pretty and aestethic . their pizza are so good too recommend",
+        "date": "4 weeks ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:21:27.706598",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Bearded Tit",
+    "rating": 4.6,
+    "review_count": 575,
+    "address": "Bar ·  · 183 Regent St",
+    "details": "Lively, offbeat watering hole & gallery",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.8854832,
+      "longitude": 151.1830631
+    },
+    "opening_hours": null,
+    "website": "http://www.thebeardedtit.com/",
+    "phone": "(02) 7209 4047",
+    "reviews": [
+      {
+        "reviewer": "Geoff Cutler",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Really cool LGBT friendly bar. Good drinks and food. Friendly staff and accepting clientele. A good visit for a fun time.",
+        "date": "6 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:21:46.362376",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "THE BEER BAR",
+    "rating": 4.7,
+    "review_count": 217,
+    "address": "Bar ·  · Entrance on, 29-31 O'Riordan St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9108655,
+      "longitude": 151.1789807
+    },
+    "opening_hours": null,
+    "website": "http://www.thebeerbar.com.au/",
+    "phone": "0438 628 238",
+    "reviews": [
+      {
+        "reviewer": "Bruce Bennett",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "The Beer Bar: Aussie-owned and run by true beer enthusiasts, this place offers an impressive range without a hint of pretension. Original artwork lines the walls, adding character to every schooner you try. The staff are knowledgeable, friendly, and love a good chat about their brews – it’s clear they’re as passionate as they are welcoming. I’m no fan of the sours or fancy brews, but even I found a stellar stout that hit the spot. If you’re after choice, charm, and genuine Aussie vibes, The Beer Bar is a must-visit.",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:22:05.004049",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Arcadia",
+    "rating": 4.6,
+    "review_count": 420,
+    "address": "Bar ·  · 7 Cope St",
+    "details": "Casual locale for pub fare & cocktails",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.8926792,
+      "longitude": 151.1815169
+    },
+    "opening_hours": null,
+    "website": "http://www.arcadialiquors.com/",
+    "phone": "(02) 8068 4470",
+    "reviews": [
+      {
+        "reviewer": "Kati Ryan",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "We came for drinks and it’s such a cute spot, lots of seating and perfect ambient lighting. Bartenders are nice. Great date spot or spot for friends. Love it here!",
+        "date": "2 weeks ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:22:23.654722",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Gin Lane",
+    "rating": 4.4,
+    "review_count": 763,
+    "address": "Cocktail bar ·  · 16A Kensington St",
+    "details": "Open ⋅ Closes 12 am",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.8926792,
+      "longitude": 151.1815169
+    },
+    "opening_hours": null,
+    "website": "http://ginlanesydney.com/",
+    "phone": null,
+    "reviews": [
+      {
+        "reviewer": "Nilufer",
+        "reviewer_photo": null,
+        "rating": 4.0,
+        "text": "Gin Lane offers an amazing experience and definitely worth a visit! The cocktails we had were made meticulously and so delicious, definitely unique to any other places in Sydney we have visited.\nOnly feedback I have regarding service is more training for the greeter at the front door. Whilst she was lovely, we were asked almost 3 times “are we done?” It definitely made us feel rushed. We were there for a 6.30pm booking and left at 6:50pm, so I don’t think we overstayed our time allotment, but definitely tainted the experience a tad.",
+        "date": "2 weeks ago",
+        "likes": 0
+      }
+    ],
+    "type": "bars",
+    "crawled_at": "2024-12-19T18:22:42.456257",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]

@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Parkview Hotel Alexandria",
+    "rating": 4.3,
+    "review_count": 487,
+    "address": "Restaurant ·  · 178-180 Mitchell Rd",
+    "details": "Bar for sports, trivia & bistro food",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.172382
+    },
+    "opening_hours": null,
+    "website": "http://www.parkviewhotel.net.au/",
+    "phone": "(02) 9557 1924",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:16:35.577116",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Pino's Vino e Cucina",
+    "rating": 4.4,
+    "review_count": 1180,
+    "address": "Italian ·  · 199 Lawrence St",
+    "details": "Intimate spot for Italian meals",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": "http://www.pinosvinoecucina.com.au/",
+    "phone": "0467 199 808",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:17:00.640492",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Cicco Zetland",
+    "rating": 4.4,
+    "review_count": 918,
+    "address": "Italian ·  · 781-785 Elizabeth St",
+    "details": "Laid-back Italian cafe & restaurant",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": "http://www.ciccozetland.com.au/",
+    "phone": "(02) 9699 3309",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:17:25.495053",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Alex",
+    "rating": 4.1,
+    "review_count": 457,
+    "address": "Pub ·  · 35 Henderson Rd",
+    "details": "Open ⋅ Closes 12 am",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": "https://merivale.com/venues/the-alex/?utm_source=googlemybusines_venue&utm_medium=organic&utm_campaign=googlemybusiness_menu_organic_backyard_at_the_alex&utm_content=website",
+    "phone": "(02) 9114 7340",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:17:50.265942",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Backyard At The Alex",
+    "rating": 4.3,
+    "review_count": 19,
+    "address": "Restaurant ·  · 35 Henderson Rd",
+    "details": null,
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": "https://merivale.com/venues/the-alex/",
+    "phone": "(02) 9114 7340",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:18:14.950470",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Mill",
+    "rating": 4.4,
+    "review_count": 1451,
+    "address": "Restaurant ·  · 41-43 Bourke Rd",
+    "details": null,
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": null,
+    "phone": null,
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:18:39.577341",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "La Piazzetta Sydney",
+    "rating": 4.9,
+    "review_count": 136,
+    "address": "Italian · Shop 4/5/25/33 Allen St",
+    "details": "Closed ⋅ Opens 7 am Fri",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": "https://www.lapiazzetta.com.au/",
+    "phone": "(02) 9451 2202",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:19:04.114955",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Restaurant 233",
+    "rating": 4.7,
+    "review_count": 139,
+    "address": "Japanese ·  · 233-235 Botany Rd",
+    "details": "Open ⋅ Closes 11:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9030403,
+      "longitude": 151.1811367
+    },
+    "opening_hours": null,
+    "website": "https://restaurant233.yumbojumbo.com.au/",
+    "phone": "0423 630 166",
+    "reviews": [],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T21:19:28.609453",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]

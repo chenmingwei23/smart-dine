@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Coffee Creative",
+    "rating": 5.0,
+    "review_count": 462,
+    "address": "Coffee shop · 133 Mitchell Rd",
+    "details": "Closed ⋅ Opens 6:30 am Fri",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": null,
+    "phone": null,
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:20:05.216230",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "The Mill",
+    "rating": 4.4,
+    "review_count": 1451,
+    "address": "Restaurant ·  · 41-43 Bourke Rd",
+    "details": null,
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": null,
+    "phone": null,
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:20:29.712381",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Cicco Zetland",
+    "rating": 4.4,
+    "review_count": 918,
+    "address": "Italian ·  · 781-785 Elizabeth St",
+    "details": "Laid-back Italian cafe & restaurant",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": "http://www.ciccozetland.com.au/",
+    "phone": "(02) 9699 3309",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:20:54.220663",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Bubble Nini Cafe",
+    "rating": 4.1,
+    "review_count": 325,
+    "address": "Cafe ·  · 10 Ebsworth St",
+    "details": "Open ⋅ Closes 10:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": "https://instagram.com/bubbleninicafe?igshid=OGQ5ZDc2ODk2ZA==",
+    "phone": "(02) 8021 7888",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:21:18.687750",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Meet Gerard",
+    "rating": 4.5,
+    "review_count": 510,
+    "address": "Cafe ·  · 54 Henderson Rd",
+    "details": "Closed ⋅ Opens 7 am Fri",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": "http://www.meetgerard.com.au/",
+    "phone": "(02) 8021 7211",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:21:43.228328",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Gold Car Wash & Cafe",
+    "rating": 3.9,
+    "review_count": 1238,
+    "address": "Car wash · 44 O'Riordan St",
+    "details": "No-frills outlet for quick cafe bites",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": "http://www.goldcarwashcafe.com.au/",
+    "phone": "(02) 9699 9007",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:22:07.786607",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "taste TEXTURE",
+    "rating": 4.8,
+    "review_count": 540,
+    "address": "Brunch · 358 Botany Rd",
+    "details": "Closed ⋅ Opens 5:30 am Fri",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": "http://www.tastetexture.com.au/",
+    "phone": "(02) 9337 4295",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:22:32.333501",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Wholegreen Bakery & Cafe Alexandria",
+    "rating": 4.8,
+    "review_count": 52,
+    "address": "Gluten Free ·  · 25 McCauley St",
+    "details": "Closed ⋅ Opens 7 am Fri",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.9014731,
+      "longitude": 151.1734156
+    },
+    "opening_hours": null,
+    "website": "http://www.wholegreenbakery.com.au/",
+    "phone": "(02) 8197 0002",
+    "reviews": [],
+    "type": "cafes",
+    "crawled_at": "2024-12-19T21:22:56.854165",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]

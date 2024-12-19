@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Urban Thai",
+    "rating": 4.7,
+    "review_count": 837,
+    "address": "Thai ·  · 3/7 Potter St",
+    "details": "Thai standards in an easygoing venue",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    },
+    "opening_hours": null,
+    "website": "https://www.urbanthaiwaterloo.com/",
+    "phone": "(02) 8394 9828",
+    "reviews": [
+      {
+        "reviewer": "Rachel",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Stopped by Urban Thai for dinner with friends. Dada is super friendly and lovely! It exceeded all my expectations and delivered great Thai dining experience.\nTheir menu is extensive, with focus on southern Thai cuisine which is known for its bold and complex flavors. The service was quick and friendly. We ordered pad thai, beef curry, stir fry....and everything was good!",
+        "date": "3 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:15:07.436042",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Yum Yai",
+    "rating": 4.3,
+    "review_count": 286,
+    "address": "Thai ·  · 403/249 George St",
+    "details": "Simple locale for traditional Thai food",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": null,
+    "phone": "(02) 9698 1211",
+    "reviews": [
+      {
+        "reviewer": "Mr. Aesthetic",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "If you appreciate delicious food, excellent staff, and a family-friendly atmosphere, this Thai café is the perfect spot for you. The interiors are very simple, nothing fancy, but this only highlights the main attraction of the place – the incredible food and the warm, welcoming staff. Each dish is prepared with care, bursting with authentic flavors that transport you straight to Thailand.\n\nThe staff goes above and beyond to make you feel at home, offering friendly service with a smile. Whether you're a fan of spicy curries, aromatic soups, or savory stir-fries, there's something here for everyone. The ambiance is relaxed and unpretentious, making it an ideal place for a casual meal with family or friends.\n\nDon't let the modest decor fool you; the quality of the food and the kindness of the staff are what make this café truly special. Be sure to visit and savor these delightful Thai dishes – you won't be disappointed!",
+        "date": "6 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:15:26.102883",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Calico - Cafe, Restaurant, Pizza & Bar",
+    "rating": 4.7,
+    "review_count": 406,
+    "address": "Restaurant ·  · 146 Abercrombie St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "https://www.calicoredfern.com.au/?utm_source=google&utm_medium=organic&utm_campaign=gbp-listing",
+    "phone": "(02) 8384 9791",
+    "reviews": [
+      {
+        "reviewer": "Nicholas Cowell (njc)",
+        "reviewer_photo": null,
+        "rating": 3.0,
+        "text": "I really wanted to like Calico. Good food - if not inspired - and friendly and helpful staff. But we sat for 20 mins after arrival with no water as the place seemed VERY short of staff for a busy Saturday lunch, and our second drinks order never actually appeared by the time we had finished our meals. Big portions of interesting food and a lively environment were pluses.",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:15:45.051610",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Mon Thai Eatery",
+    "rating": 4.6,
+    "review_count": 240,
+    "address": "Restaurant ·  · 779 Elizabeth St",
+    "details": "Open ⋅ Closes 9:30 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "https://www.facebook.com/Mon-Thai-Eatery-Zetland-352163118691492/",
+    "phone": "(02) 9698 6698",
+    "reviews": [
+      {
+        "reviewer": "Joshua Kitt",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Best thai spot in Zetland! Cozy restaurant with authentic and delicious food. The ambience is very welcoming too. Ordered the recommended Khao Soi and it was great for the rainy weather. Nasi goreng was tasty too but on the spicer side (our fault as this is mentioned on the menu)",
+        "date": "5 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:16:03.753173",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Ester Restaurant",
+    "rating": 4.5,
+    "review_count": 1385,
+    "address": "Australian ·  · 46-52 Meagher St",
+    "details": "Eclectic flavour combos in a chic room",
+    "photo_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "http://www.ester-restaurant.com.au/",
+    "phone": "(02) 8068 8279",
+    "reviews": [
+      {
+        "reviewer": "Bruno Rodríguez Armesto",
+        "reviewer_photo": null,
+        "rating": 4.0,
+        "text": "We had a great experience and Jackson treated us handsomely. The eggplant was the highlight, really , really good, crispy, smoky, flavourful. The pork chops were also very good.\n\nThe dumplings and the blood sausage weren’t impressive. The cod roe was really interesting.\n\nWhile it was good, for that price point and level of hype I was expecting something really impressive, and it wasn’t necessarily that. The kitchen was slow at times with weird waiting times between dishes and then several coming at once. The food was very good but save the eggplant nothing really blew my mind.",
+        "date": "3 weeks ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:16:22.484780",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "NOUR",
+    "rating": 4.8,
+    "review_count": 2887,
+    "address": "Middle Eastern ·  · 3/490 Crown St",
+    "details": "Chic eatery with inventive Lebanese fare",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "https://www.noursydney.com/?utm_content=NOUR+-+Surry+Hills&utm_campaign=Google+My+Business&utm_medium=organic&utm_source=google&utm_term=plcid_8876915928515631771",
+    "phone": "(02) 9331 3413",
+    "reviews": [
+      {
+        "reviewer": "Gaith Bader",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "I'm getting the feeling that this place is a birthday destination; every table around us got their birthday treat from the restaurant, and ours wasn't the exception. The food was lovely, the atmosphere was lovely and the service was excellent. I'm not going to say it had the best food in town, it didn't, but it was good and we all enjoyed it. Parking is tricky, and if not on a weekend, i can only imagine it to be harder. Allow plenty of extra time to organise parking if you're driving there. Here's a random piece of info, their toilets are nice and clean, however, for some reason, their cubicles have prison grade doors! Very weird, I'm not sure if they are designed to keep people in or out! I put a photo for you to judge for yourself 🤔 All in all it's worth the visit. And of course, expect to pay for the privilege.",
+        "date": "4 months ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:16:41.206727",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "Crystal Restaurant",
+    "rating": 4.4,
+    "review_count": 166,
+    "address": "Restaurant ·  · Meriton Retail Precinct Waterloo, Shop 1/1 Crystal St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1552566626-52f8b828add9",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "http://www.crystalrestaurantnbar.com/",
+    "phone": "0466 994 496",
+    "reviews": [
+      {
+        "reviewer": "Brittini Ray",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Wow. What a hidden treasure- garlic prawns were fantastic.\n\nSalmon was pan fried to perfection.\n\nWe will be back. Small menu but meals were expertly prepared and portions generous.\n\nStandard Sydney pricing. Low key environment - and great music choices. Love the vibe.\n\nFamily run.",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:16:59.955734",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  },
+  {
+    "name": "KINDRED Restaurant",
+    "rating": 4.8,
+    "review_count": 1148,
+    "address": "Italian ·  · 137 Cleveland St",
+    "details": "Open ⋅ Closes 10 pm",
+    "photo_url": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+    "exact_location": {
+      "latitude": -33.8972858,
+      "longitude": 151.1801564
+    },
+    "opening_hours": null,
+    "website": "http://www.kindredrestaurant.com.au/",
+    "phone": "(02) 8937 0530",
+    "reviews": [
+      {
+        "reviewer": "Charlie Leung",
+        "reviewer_photo": null,
+        "rating": 5.0,
+        "text": "Fantastic vibe and amazing staff! We had such a great meal here. The staff recommended some delicious dishes, and everything was spot-on. The carrots were so tasty, and I especially loved the salads. Drinks were refreshing, and every bite was amazing. We were tempted to try the whole menu but were just too full! Can’t wait to come back and try more. Highly recommended!😋😋😋",
+        "date": "a month ago",
+        "likes": 0
+      }
+    ],
+    "type": "restaurants",
+    "crawled_at": "2024-12-19T18:17:18.485809",
+    "location": {
+      "latitude": -33.899109,
+      "longitude": 151.209469
+    }
+  }
+]
