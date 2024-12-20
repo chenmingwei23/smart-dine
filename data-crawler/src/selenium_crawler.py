@@ -5,6 +5,7 @@ import os
 import platform
 from datetime import datetime
 from pathlib import Path
+import random
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -277,43 +278,128 @@ class SeleniumGoogleMapsCrawler:
 
             # Get opening hours with soft fail
             try:
-                # First try to find and click the hours button
-                try:
-                    hours_button = self.driver.find_element(By.CSS_SELECTOR, "button[jsaction*='hours']")
-                    hours_button.click()
-                    time.sleep(1)
-                except Exception as e:
-                    logger.warning(f"Could not click hours button: {str(e)}")
-                    raise
+                # First try to find and click the hours button with updated selectors
+                hours_button_selectors = [
+                    "button[jsaction*='pane.openhours.expand']",  # Main hours button
+                    "button[aria-label*='opening hours']",  # Alternative by aria-label
+                    "button[aria-label*='Hours']",  # Another alternative
+                    "div[jsaction*='openhours.expand']"  # Div that might be clickable
+                ]
 
-                # Try to get the hours from the dialog
+                hours_clicked = False
+                for selector in hours_button_selectors:
+                    try:
+                        buttons = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                        for button in buttons:
+                            try:
+                                # Check if it's the hours button by its text or aria-label
+                                button_text = (button.get_attribute("aria-label") or button.text).lower()
+                                if any(keyword in button_text for keyword in ["hour", "open", "time"]):
+                                    button.click()
+                                    hours_clicked = True
+                                    time.sleep(2)  # Wait for hours to load
+                                    logger.info("Successfully clicked hours button")
+                                    break
+                            except:
+                                continue
+                        if hours_clicked:
+                            break
+                    except:
+                        continue
+
+                if not hours_clicked:
+                    logger.warning("Could not find hours button")
+                    details['opening_hours'] = None
+                    raise Exception("Hours button not found")
+
+                # Try to get the hours from the dialog or expanded section
+                opening_hours = {}
+                hours_container_selectors = [
+                    "table.WgFkxc",  # Main hours table
+                    "div[role='dialog'] table",  # Hours in dialog
+                    "div.t39EBf.GUrTXd"  # Hours in expanded section
+                ]
+
+                hours_found = False
+                for container_selector in hours_container_selectors:
+                    try:
+                        hours_container = WebDriverWait(self.driver, 5).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, container_selector))
+                        )
+                        
+                        # Try different row selectors
+                        row_selectors = ["tr", "div.G8aQO", "div[role='row']"]
+                        for row_selector in row_selectors:
+                            rows = hours_container.find_elements(By.CSS_SELECTOR, row_selector)
+                            if rows:
+                                for row in rows:
+                                    try:
+                                        # Try different cell selectors for day and time
+                                        day_selectors = ["th", "div[role='cell']:first-child", "div.mxowUb"]
+                                        time_selectors = ["td", "div[role='cell']:last-child", "div.G8aQO"]
+                                        
+                                        day = None
+                                        time_range = None
+                                        
+                                        # Get day
+                                        for day_selector in day_selectors:
+                                            try:
+                                                day_elem = row.find_element(By.CSS_SELECTOR, day_selector)
+                                                day = day_elem.text.strip()
+                                                if day:
+                                                    break
+                                            except:
+                                                continue
+                                        
+                                        # Get time
+                                        for time_selector in time_selectors:
+                                            try:
+                                                time_elem = row.find_element(By.CSS_SELECTOR, time_selector)
+                                                time_range = time_elem.text.strip()
+                                                if time_range:
+                                                    break
+                                            except:
+                                                continue
+                                        
+                                        if day and time_range:
+                                            opening_hours[day] = time_range
+                                            hours_found = True
+                                    except:
+                                        continue
+                                
+                                if hours_found:
+                                    break
+                        
+                        if hours_found:
+                            break
+                            
+                    except:
+                        continue
+
+                # Try to close the dialog if it was opened
                 try:
-                    hours_container = self.wait.until(EC.presence_of_element_located(
-                        (By.CSS_SELECTOR, "div[role='dialog']")
-                    ))
-                    hours_list = hours_container.find_elements(By.CSS_SELECTOR, "table tr")
-                    
-                    opening_hours = {}
-                    for hour_row in hours_list:
+                    close_button_selectors = [
+                        "button[jsaction*='modal-dialog-close']",
+                        "button[aria-label*='Close']",
+                        "button.VfPpkd-icon-LgbsSe"
+                    ]
+                    for selector in close_button_selectors:
                         try:
-                            day = hour_row.find_element(By.CSS_SELECTOR, "th").text.strip()
-                            time_range = hour_row.find_element(By.CSS_SELECTOR, "td").text.strip()
-                            opening_hours[day] = time_range
+                            close_button = self.driver.find_element(By.CSS_SELECTOR, selector)
+                            close_button.click()
+                            time.sleep(1)
+                            break
                         except:
                             continue
+                except:
+                    pass
 
-                    # Try to close the dialog if it was opened
-                    try:
-                        close_button = self.driver.find_element(By.CSS_SELECTOR, "button[jsaction*='modal-dialog-close']")
-                        close_button.click()
-                        time.sleep(1)
-                    except:
-                        pass
+                details['opening_hours'] = opening_hours if opening_hours else None
+                if opening_hours:
+                    logger.info(f"Successfully collected {len(opening_hours)} days of opening hours")
+                else:
+                    logger.warning("No opening hours found")
 
-                    details['opening_hours'] = opening_hours if opening_hours else None
-                except Exception as e:
-                    logger.warning(f"Could not get hours from dialog: {str(e)}")
-                    details['opening_hours'] = None
             except Exception as e:
                 logger.warning(f"Error getting opening hours: {str(e)}")
                 details['opening_hours'] = None
@@ -339,232 +425,214 @@ class SeleniumGoogleMapsCrawler:
                 reviews = []
                 logger.info("Starting review collection...")
 
-                # Wait for reviews section with longer timeout and different selectors
-                reviews_section = None
-                reviews_selectors = [
-                    "div.m6QErb.DxyBCb.kA9KIf.dS8AEf",  # Main reviews container
-                    "div.jftiEf",  # Alternative container
-                    "div[jsaction*='reviewSort']",  # Reviews sort container
-                    "div[jscontroller*='ReviewsDisplayDialog']",  # Reviews dialog
-                    "div.section-layout.section-scrollbox"  # Older layout
+                # First, find and click the reviews count/link to open the reviews modal
+                review_trigger_selectors = [
+                    "button[jsaction*='pane.rating.moreReviews']",  # Main reviews trigger
+                    "button[jsaction*='reviewChart']",  # Alternative trigger
+                    "span[jsaction*='pane.rating.moreReviews']"  # Text-based trigger
                 ]
 
-                for selector in reviews_selectors:
+                review_modal_opened = False
+                for selector in review_trigger_selectors:
                     try:
-                        reviews_section = self.wait.until(EC.presence_of_element_located(
-                            (By.CSS_SELECTOR, selector)
-                        ))
-                        logger.info(f"Found reviews section with selector: {selector}")
-                        break
-                    except:
-                        continue
-
-                if not reviews_section:
-                    logger.warning("Could not find reviews section")
-                    raise Exception("Reviews section not found")
-
-                # Try to click "More reviews" button with multiple selectors and attempts
-                more_reviews_clicked = False
-                more_reviews_selectors = [
-                    "button.w8nwRe.kyuRq",
-                    "button[jsaction*='reviewChart']",
-                    "button[aria-label*='review']",
-                    "button.allxGc",
-                    "button[jsaction*='pane.reviewChart.moreReviews']"
-                ]
-
-                for selector in more_reviews_selectors:
-                    try:
-                        # Try to find all matching buttons and click each until success
-                        buttons = self.driver.find_elements(By.CSS_SELECTOR, selector)
-                        for button in buttons:
+                        triggers = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                        for trigger in triggers:
                             try:
-                                if "review" in button.text.lower() or "more" in button.text.lower():
-                                    button.click()
-                                    more_reviews_clicked = True
-                                    logger.info(f"Clicked 'More reviews' button with text: {button.text}")
-                                    time.sleep(3)
+                                # Check if element contains review count
+                                trigger_text = trigger.text.lower()
+                                if 'review' in trigger_text and any(c.isdigit() for c in trigger_text):
+                                    logger.info(f"Found reviews trigger with text: {trigger_text}")
+                                    trigger.click()
+                                    time.sleep(2)  # Short wait for modal
+                                    review_modal_opened = True
                                     break
                             except:
                                 continue
-                        if more_reviews_clicked:
+                        if review_modal_opened:
                             break
                     except:
                         continue
 
-                if not more_reviews_clicked:
-                    logger.warning("Could not click 'More reviews' button")
+                if not review_modal_opened:
+                    logger.warning("Could not open reviews modal")
+                    return details
 
-                # Find and scroll the reviews panel
-                reviews_panel = None
-                panel_selectors = [
-                    "div.m6QErb[role='main']",
-                    "div[jsaction*='scroll']",
-                    "div.DxyBCb",
-                    "div.section-layout.section-scrollbox"
+                # Wait for the reviews modal and get the scrollable container
+                reviews_container = None
+                container_selectors = [
+                    "div[role='dialog'] div[jstrack='review-list']",  # Main reviews container
+                    "div[role='dialog'] div[jsaction*='reviewSort']",  # Reviews list container
+                    "div[role='dialog'] div.DxyBCb[role='region']",   # Reviews region
+                    "div[role='dialog'] div.m6QErb"                   # Backup container
                 ]
 
-                for selector in panel_selectors:
-                    try:
-                        reviews_panel = self.driver.find_element(By.CSS_SELECTOR, selector)
-                        break
-                    except:
-                        continue
+                # Add random delay between 2-4 seconds
+                time.sleep(2 + random.random() * 2)
 
-                if reviews_panel:
-                    last_height = 0
-                    scroll_attempts = 0
-                    max_scroll_attempts = 20  # Increase scroll attempts
-                    no_change_count = 0
-                    max_no_change = 3
-
-                    while scroll_attempts < max_scroll_attempts and no_change_count < max_no_change:
-                        # Scroll down
-                        self.driver.execute_script(
-                            "arguments[0].scrollTo(0, arguments[0].scrollHeight);", 
-                            reviews_panel
-                        )
-                        time.sleep(2)
-
-                        # Try to expand all "More" buttons in reviews
+                # First wait for the modal dialog
+                try:
+                    modal = WebDriverWait(self.driver, 10).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, "div[role='dialog']"))
+                    )
+                    logger.info("Review modal detected")
+                    
+                    # Simulate human-like pause
+                    time.sleep(1 + random.random())
+                    
+                    # Try to find the reviews section within the modal
+                    for selector in container_selectors:
                         try:
-                            more_buttons = reviews_panel.find_elements(By.CSS_SELECTOR, "button.w8nwRe")
-                            for button in more_buttons:
-                                try:
-                                    if "more" in button.text.lower():
-                                        button.click()
-                                        time.sleep(0.5)
-                                except:
-                                    continue
-                        except:
-                            pass
+                            reviews_container = modal.find_element(By.CSS_SELECTOR, selector)
+                            # Verify container has actual review elements
+                            review_elements = reviews_container.find_elements(By.CSS_SELECTOR, 
+                                "div.jftiEf, div.gws-localreviews__google-review")
+                            
+                            if review_elements:
+                                logger.info(f"Found {len(review_elements)} review elements with selector: {selector}")
+                                break
+                            else:
+                                logger.info(f"Container found but empty with selector: {selector}")
+                        except Exception as e:
+                            logger.debug(f"Selector {selector} failed: {str(e)}")
+                            continue
+                            
+                except Exception as e:
+                    logger.warning(f"Modal detection failed: {str(e)}")
+                    return details
 
-                        # Calculate new scroll height
+                if not reviews_container:
+                    logger.warning("Could not find valid reviews container")
+                    return details
+
+                # Add random mouse movements to seem more human-like
+                try:
+                    action = webdriver.ActionChains(self.driver)
+                    action.move_to_element(reviews_container)
+                    action.move_by_offset(random.randint(-10, 10), random.randint(-10, 10))
+                    action.perform()
+                except Exception as e:
+                    logger.debug(f"Mouse movement failed: {str(e)}")
+
+                # Scroll with random delays and checks
+                last_height = 0
+                scroll_attempts = 0
+                max_attempts = 10
+                
+                while scroll_attempts < max_attempts:
+                    try:
+                        # Random delay between scrolls (1-3 seconds)
+                        time.sleep(1 + random.random() * 2)
+                        
+                        # Scroll with a random amount
+                        scroll_amount = random.randint(300, 500)
+                        self.driver.execute_script(
+                            f"arguments[0].scrollTop += {scroll_amount}", 
+                            reviews_container
+                        )
+                        
+                        # Check new height
                         new_height = self.driver.execute_script(
                             "return arguments[0].scrollHeight", 
-                            reviews_panel
+                            reviews_container
                         )
-
+                        
                         if new_height == last_height:
-                            no_change_count += 1
+                            scroll_attempts += 1
                         else:
-                            no_change_count = 0
-
-                        last_height = new_height
-                        scroll_attempts += 1
-                        logger.info(f"Scroll attempt {scroll_attempts}/{max_scroll_attempts}")
-
-                # Get all review elements with multiple selectors
-                review_elements = []
-                review_selectors = [
-                    "div.jftiEf.fontBodyMedium",
-                    "div.gws-localreviews__google-review",
-                    "div[jscontroller*='ReviewsDisplayDialog']",
-                    "div.ODSEW-ShBeI",
-                    "div[data-review-id]",
-                    "div.jxjCjc"
-                ]
-
-                for selector in review_selectors:
-                    try:
-                        elements = reviews_section.find_elements(By.CSS_SELECTOR, selector)
-                        if elements:
-                            review_elements = elements
-                            logger.info(f"Found {len(elements)} review elements with selector: {selector}")
-                            break
-                    except:
-                        continue
-
-                if not review_elements:
-                    logger.warning("No review elements found")
-                    raise Exception("No review elements found")
-
-                # Process reviews with improved selectors
-                for review in review_elements:
-                    try:
-                        review_data = {
-                            'reviewer': None,
-                            'reviewer_photo': None,
-                            'rating': None,
-                            'text': None,
-                            'date': None,
-                            'likes': 0
-                        }
-
-                        # Get reviewer info with multiple selectors
-                        reviewer_selectors = [
-                            "div.d4r55", "div.WNxzHc", 
-                            "div.TSUbDb", "div.author-name"
-                        ]
-                        for selector in reviewer_selectors:
+                            last_height = new_height
+                            scroll_attempts = 0
+                            
+                        # Try to expand any "More" buttons
+                        more_buttons = reviews_container.find_elements(
+                            By.CSS_SELECTOR, 
+                            "button.w8nwRe"
+                        )
+                        for button in more_buttons:
                             try:
-                                reviewer_elem = review.find_element(By.CSS_SELECTOR, selector)
-                                review_data['reviewer'] = reviewer_elem.text.strip()
-                                try:
-                                    profile_img = reviewer_elem.find_element(
-                                        By.CSS_SELECTOR, 
-                                        "img.NBa7we, img[jsname], img.reviewer-image"
-                                    )
-                                    review_data['reviewer_photo'] = profile_img.get_attribute("src")
-                                except:
-                                    pass
-                                break
+                                if "more" in button.text.lower():
+                                    # Random delay before clicking (0.5-1.5 seconds)
+                                    time.sleep(0.5 + random.random())
+                                    button.click()
                             except:
                                 continue
-
-                        # Get rating with multiple selectors
-                        rating_selectors = [
-                            "span.kvMYJc", "span[role='img']",
-                            "div.Fam1ne", "span.rating"
-                        ]
-                        for selector in rating_selectors:
-                            try:
-                                rating_elem = review.find_element(By.CSS_SELECTOR, selector)
-                                aria_label = rating_elem.get_attribute("aria-label")
-                                if aria_label and any(c.isdigit() for c in aria_label):
-                                    review_data['rating'] = float(aria_label.split()[0])
-                                    break
-                            except:
-                                continue
-
-                        # Get review text with multiple selectors
-                        text_selectors = [
-                            "span.wiI7pd", "div.Jtu6Td",
-                            "div.review-text", "span[jsan*='review-full-text']"
-                        ]
-                        for selector in text_selectors:
-                            try:
-                                text_elem = review.find_element(By.CSS_SELECTOR, selector)
-                                review_data['text'] = text_elem.text.strip()
-                                break
-                            except:
-                                continue
-
-                        # Get review date with multiple selectors
-                        date_selectors = [
-                            "span.rsqaWe", "span.dehysf",
-                            "span.review-date", "span.review-time"
-                        ]
-                        for selector in date_selectors:
-                            try:
-                                date_elem = review.find_element(By.CSS_SELECTOR, selector)
-                                review_data['date'] = date_elem.text.strip()
-                                break
-                            except:
-                                continue
-
-                        # Only add reviews that have meaningful data
-                        if any(value not in (None, '', 0) for value in review_data.values()):
-                            reviews.append(review_data)
-                            if len(reviews) % 5 == 0:
-                                logger.info(f"Processed {len(reviews)} reviews so far")
-
+                                
                     except Exception as e:
-                        logger.warning(f"Error extracting review data: {str(e)}")
-                        continue
+                        logger.warning(f"Scroll attempt failed: {str(e)}")
+                        scroll_attempts += 1
+                        
+                    # Break if we've hit the retry limit
+                    if scroll_attempts >= 3:
+                        break
 
-                logger.info(f"Successfully collected {len(reviews)} reviews")
-                details['reviews'] = reviews
+                # Now extract all visible reviews
+                try:
+                    review_elements = reviews_container.find_elements(
+                        By.CSS_SELECTOR, 
+                        "div.jftiEf, div.gws-localreviews__google-review"
+                    )
+                    logger.info(f"Found {len(review_elements)} review elements to process")
+
+                    for review in review_elements:
+                        try:
+                            review_data = {
+                                'reviewer': None,
+                                'rating': None,
+                                'text': None,
+                                'date': None
+                            }
+
+                            # Get reviewer name (updated selector)
+                            try:
+                                name_elem = review.find_element(By.CSS_SELECTOR, "div.d4r55, div.TSUbDb")
+                                review_data['reviewer'] = name_elem.text.strip()
+                            except:
+                                continue  # Skip if no reviewer name
+
+                            # Get rating (updated selector)
+                            try:
+                                rating_elem = review.find_element(By.CSS_SELECTOR, "span.kvMYJc, span[role='img']")
+                                aria_label = rating_elem.get_attribute("aria-label")
+                                if aria_label:
+                                    review_data['rating'] = float(aria_label.split()[0])
+                            except:
+                                pass
+
+                            # Get review text (updated selector)
+                            try:
+                                text_elem = review.find_element(By.CSS_SELECTOR, "span.wiI7pd, div.MyEned")
+                                review_data['text'] = text_elem.text.strip()
+                            except:
+                                pass
+
+                            # Get date (updated selector)
+                            try:
+                                date_elem = review.find_element(By.CSS_SELECTOR, "span.rsqaWe, span[class*='dehysf']")
+                                review_data['date'] = date_elem.text.strip()
+                            except:
+                                pass
+
+                            # Only add reviews with at least some valid data
+                            if review_data['reviewer'] and any(v for v in review_data.values() if v):
+                                reviews.append(review_data)
+
+                        except Exception as e:
+                            logger.warning(f"Error extracting review data: {str(e)}")
+                            continue
+
+                    logger.info(f"Successfully collected {len(reviews)} reviews")
+                    details['reviews'] = reviews
+
+                    # Try to close the modal
+                    try:
+                        close_button = self.driver.find_element(By.CSS_SELECTOR, "button[jsaction*='modal-dialog-close']")
+                        close_button.click()
+                        time.sleep(1)
+                    except:
+                        pass
+
+                except Exception as e:
+                    logger.warning(f"Error getting reviews: {str(e)}")
+                    details['reviews'] = []
 
             except Exception as e:
                 logger.warning(f"Error getting reviews: {str(e)}")
