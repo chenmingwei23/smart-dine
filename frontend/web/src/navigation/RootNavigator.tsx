@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import SelectionScreen from '../screens/SelectionScreen';
 import ResultScreen from '../screens/ResultScreen';
@@ -10,64 +9,50 @@ import { RootStackParamList } from './types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const screenOptions = {
-  headerStyle: {
-    backgroundColor: '#FF6B6B',
-  },
-  headerTintColor: '#fff',
-  headerTitleStyle: {
-    fontWeight: '700' as const,
-  },
-  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-  gestureEnabled: true,
-  gestureDirection: 'horizontal' as const,
-};
-
 export default function RootNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={screenOptions}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#192112',
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: '#F4F7EE',
+        headerTitleStyle: {
+          fontFamily: 'Roboto-Bold',
+          fontSize: 20,
+          color: '#94B06B',
+        },
+        cardStyle: {
+          backgroundColor: '#334027',
+        },
+      }}
     >
       <Stack.Screen 
         name="Home" 
         component={HomeScreen}
-        options={{
-          title: 'SmartDine',
-          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
-        }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen 
         name="Selection" 
         component={SelectionScreen}
-        options={{
-          title: 'Find Your Meal',
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
+        options={{ title: 'Make Your Selection' }}
       />
       <Stack.Screen 
         name="Result" 
         component={ResultScreen}
-        options={{
-          title: 'Perfect Match',
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-        }}
+        options={{ title: 'Your Match' }}
       />
       <Stack.Screen 
         name="Reviews" 
         component={ReviewsScreen}
-        options={{
-          title: 'Reviews',
-          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-        }}
+        options={{ title: 'Restaurant Reviews' }}
       />
       <Stack.Screen 
         name="Profile" 
         component={ProfileScreen}
-        options={{
-          title: 'My Profile',
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
+        options={{ title: 'Your Profile' }}
       />
     </Stack.Navigator>
   );

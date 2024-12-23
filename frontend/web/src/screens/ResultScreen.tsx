@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Animated } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/types';
@@ -20,15 +21,12 @@ interface Restaurant {
 
 export default function ResultScreen() {
   const navigation = useNavigation<ResultScreenNavigationProp>();
-  const { currentRestaurant, setCurrentRestaurant, selectionState } = useStore();
-  
-  // Animation values
+  const { currentRestaurant, setCurrentRestaurant } = useStore();
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
-  const slideAnim = React.useRef(new Animated.Value(50)).current;
+  const scaleAnim = React.useRef(new Animated.Value(0.95)).current;
 
   useEffect(() => {
-    // Fetch restaurant data based on selections
-    // For now using mock data
+    // Mock data
     setCurrentRestaurant({
       name: "Sushi Paradise",
       cuisine: "Japanese",
@@ -40,17 +38,15 @@ export default function ResultScreen() {
       openNow: true,
     });
 
-    // Start animations
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 800,
+        duration: 600,
         useNativeDriver: true,
       }),
-      Animated.spring(slideAnim, {
-        toValue: 0,
-        speed: 12,
-        bounciness: 8,
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 600,
         useNativeDriver: true,
       }),
     ]).start();
@@ -59,180 +55,199 @@ export default function ResultScreen() {
   if (!currentRestaurant) {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-        <Text style={styles.title}>Perfect Match!</Text>
-        <Text style={styles.subtitle}>Based on your preferences</Text>
-      </Animated.View>
-
-      <Animated.View 
-        style={[
-          styles.resultCard,
-          {
-            opacity: fadeAnim,
-            transform: [{ translateY: slideAnim }],
-          }
-        ]}
-      >
-        <Image
-          source={{ uri: currentRestaurant.image }}
-          style={styles.restaurantImage}
-        />
-        <View style={styles.restaurantInfo}>
-          <Text style={styles.restaurantName}>{currentRestaurant.name}</Text>
-          <Text style={styles.cuisine}>{currentRestaurant.cuisine}</Text>
-          
-          <View style={styles.detailsRow}>
-            <Text style={styles.rating}>★ {currentRestaurant.rating}</Text>
-            <Text style={styles.price}>{currentRestaurant.priceLevel}</Text>
-            <Text style={styles.distance}>{currentRestaurant.distance}</Text>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <Animated.View 
+          style={[
+            styles.content,
+            {
+              opacity: fadeAnim,
+              transform: [{ scale: scaleAnim }],
+            }
+          ]}
+        >
+          <View style={styles.header}>
+            <Text style={styles.title}>Perfect Match!</Text>
+            <Text style={styles.subtitle}>Based on your preferences</Text>
           </View>
 
-          <View style={styles.tagsContainer}>
-            {currentRestaurant.tags.map((tag: string, index: number) => (
-              <View key={index} style={styles.tag}>
-                <Text style={styles.tagText}>{tag}</Text>
+          <View style={styles.resultCard}>
+            <Image
+              source={{ uri: currentRestaurant.image }}
+              style={styles.restaurantImage}
+            />
+            <View style={styles.restaurantInfo}>
+              <Text style={styles.restaurantName}>{currentRestaurant.name}</Text>
+              <Text style={styles.cuisine}>{currentRestaurant.cuisine}</Text>
+              
+              <View style={styles.detailsRow}>
+                <Text style={styles.rating}>★ {currentRestaurant.rating}</Text>
+                <Text style={styles.price}>{currentRestaurant.priceLevel}</Text>
+                <Text style={styles.distance}>{currentRestaurant.distance}</Text>
               </View>
-            ))}
+
+              <View style={styles.tagsContainer}>
+                {currentRestaurant.tags.map((tag: string, index: number) => (
+                  <View key={index} style={styles.tag}>
+                    <Text style={styles.tagText}>{tag}</Text>
+                  </View>
+                ))}
+              </View>
+
+              <View style={styles.statusContainer}>
+                <View style={[
+                  styles.statusIndicator,
+                  { backgroundColor: currentRestaurant.openNow ? '#94B06B' : '#FF4444' }
+                ]} />
+                <Text style={styles.statusText}>
+                  {currentRestaurant.openNow ? 'Open Now' : 'Closed'}
+                </Text>
+              </View>
+            </View>
           </View>
 
-          <View style={styles.statusContainer}>
-            <View style={[styles.statusIndicator, { backgroundColor: currentRestaurant.openNow ? '#4CAF50' : '#F44336' }]} />
-            <Text style={styles.statusText}>{currentRestaurant.openNow ? 'Open Now' : 'Closed'}</Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity 
+              style={styles.mainButton}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.buttonText}>Let's Go!</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.secondaryButton}
+              onPress={() => navigation.navigate('Selection')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>Try Again</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-      </Animated.View>
 
-      <Animated.View 
-        style={[
-          styles.buttonsContainer,
-          {
-            opacity: fadeAnim,
-            transform: [{ translateY: slideAnim }],
-          }
-        ]}
-      >
-        <TouchableOpacity 
-          style={[styles.button, styles.primaryButton]}
-          onPress={() => {/* Add reservation/navigation logic */}}
-        >
-          <Text style={styles.buttonText}>Let's Go!</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[styles.button, styles.secondaryButton]}
-          onPress={() => navigation.navigate('Selection')}
-        >
-          <Text style={[styles.buttonText, styles.secondaryButtonText]}>Try Again</Text>
-        </TouchableOpacity>
-      </Animated.View>
-
-      <Animated.View style={{ opacity: fadeAnim }}>
-        <TouchableOpacity 
-          style={styles.reviewsButton}
-          onPress={() => navigation.navigate('Reviews')}
-        >
-          <Text style={styles.reviewsButtonText}>See All Reviews</Text>
-        </TouchableOpacity>
-      </Animated.View>
-    </ScrollView>
+          <TouchableOpacity 
+            style={styles.reviewsButton}
+            onPress={() => navigation.navigate('Reviews')}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.reviewsButtonText}>See All Reviews</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#334027',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  content: {
+    padding: 20,
+  },
+  loadingText: {
+    fontFamily: 'Roboto',
+    color: '#F4F7EE',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
   },
   header: {
-    padding: 20,
     alignItems: 'center',
+    marginBottom: 24,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
+    fontFamily: 'Roboto-Bold',
+    fontSize: 32,
+    color: '#94B06B',
+    marginBottom: 8,
+    textAlign: 'center',
+    letterSpacing: 0.5,
   },
   subtitle: {
+    fontFamily: 'Roboto',
     fontSize: 16,
-    color: '#666',
-    marginTop: 5,
+    color: '#F4F7EE',
+    textAlign: 'center',
+    opacity: 0.9,
   },
   resultCard: {
-    margin: 20,
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#192112',
+    marginBottom: 24,
   },
   restaurantImage: {
     width: '100%',
     height: 200,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
   },
   restaurantInfo: {
-    padding: 15,
+    padding: 20,
   },
   restaurantName: {
+    fontFamily: 'Roboto-Bold',
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    color: '#F4F7EE',
+    marginBottom: 4,
   },
   cuisine: {
+    fontFamily: 'Roboto',
     fontSize: 16,
-    color: '#666',
-    marginTop: 5,
+    color: '#E6EDDA',
+    opacity: 0.9,
+    marginBottom: 12,
   },
   detailsRow: {
     flexDirection: 'row',
-    marginTop: 10,
     alignItems: 'center',
+    marginBottom: 16,
   },
   rating: {
+    fontFamily: 'Roboto-Bold',
     fontSize: 16,
-    color: '#FFC107',
-    marginRight: 15,
+    color: '#94B06B',
+    marginRight: 16,
   },
   price: {
+    fontFamily: 'Roboto',
     fontSize: 16,
-    color: '#4CAF50',
-    marginRight: 15,
+    color: '#F4F7EE',
+    marginRight: 16,
   },
   distance: {
+    fontFamily: 'Roboto',
     fontSize: 16,
-    color: '#666',
+    color: '#E6EDDA',
+    opacity: 0.9,
   },
   tagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 15,
+    marginBottom: 16,
+    gap: 8,
   },
   tag: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#334027',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 20,
-    marginRight: 8,
-    marginBottom: 8,
+    borderRadius: 16,
   },
   tagText: {
+    fontFamily: 'Roboto',
     fontSize: 14,
-    color: '#666',
+    color: '#94B06B',
   },
   statusContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 15,
   },
   statusIndicator: {
     width: 8,
@@ -241,45 +256,51 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   statusText: {
+    fontFamily: 'Roboto',
     fontSize: 14,
-    color: '#666',
+    color: '#E6EDDA',
+    opacity: 0.9,
   },
   buttonsContainer: {
-    padding: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  button: {
-    flex: 1,
-    paddingVertical: 15,
-    borderRadius: 25,
-    marginHorizontal: 10,
-    alignItems: 'center',
-  },
-  primaryButton: {
-    backgroundColor: '#FF6B6B',
-  },
-  secondaryButton: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#FF6B6B',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  secondaryButtonText: {
-    color: '#FF6B6B',
-  },
-  reviewsButton: {
-    padding: 15,
-    alignItems: 'center',
+    gap: 12,
     marginBottom: 20,
   },
-  reviewsButtonText: {
-    color: '#666',
+  mainButton: {
+    flex: 1,
+    backgroundColor: '#94B06B',
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+  },
+  secondaryButton: {
+    flex: 1,
+    backgroundColor: '#192112',
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontFamily: 'Roboto-Bold',
     fontSize: 16,
+    color: '#192112',
+    letterSpacing: 0.5,
+  },
+  secondaryButtonText: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    color: '#E6EDDA',
+    letterSpacing: 0.5,
+  },
+  reviewsButton: {
+    alignSelf: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+  },
+  reviewsButtonText: {
+    fontFamily: 'Roboto',
+    fontSize: 16,
+    color: '#94B06B',
     textDecorationLine: 'underline',
   },
 }); 

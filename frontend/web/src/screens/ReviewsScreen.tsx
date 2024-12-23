@@ -1,188 +1,191 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/types';
 
-type ReviewsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Reviews'>;
-
-// Mock data - replace with API call
-const MOCK_REVIEWS = Array(10).fill(null).map((_, index) => ({
-  id: index.toString(),
-  restaurantName: "Restaurant " + (index + 1),
-  rating: (Math.random() * 2 + 3).toFixed(1), // Random rating between 3-5
-  reviewCount: Math.floor(Math.random() * 500),
-  image: `https://picsum.photos/300/200?random=${index}`,
-  cuisine: ['Japanese', 'Chinese', 'Thai', 'Italian', 'Indian'][Math.floor(Math.random() * 5)],
-  priceLevel: ['$', '$$', '$$$'][Math.floor(Math.random() * 3)],
-}));
+const MOCK_REVIEWS = [
+  {
+    id: 1,
+    userName: 'John D.',
+    rating: 4.5,
+    date: '2 days ago',
+    content: 'Amazing sushi and great atmosphere! The service was excellent and the food came out quickly.',
+    userImage: 'https://via.placeholder.com/40',
+    helpful: 12,
+  },
+  {
+    id: 2,
+    userName: 'Sarah M.',
+    rating: 5,
+    date: '1 week ago',
+    content: 'Best Japanese restaurant in town! The dragon roll was absolutely delicious. Will definitely come back!',
+    userImage: 'https://via.placeholder.com/40',
+    helpful: 8,
+  },
+  {
+    id: 3,
+    userName: 'Mike R.',
+    rating: 4,
+    date: '2 weeks ago',
+    content: 'Good food and nice ambiance. Prices are a bit high but the quality makes up for it.',
+    userImage: 'https://via.placeholder.com/40',
+    helpful: 5,
+  },
+];
 
 export default function ReviewsScreen() {
-  const navigation = useNavigation<ReviewsScreenNavigationProp>();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCuisine, setSelectedCuisine] = useState<string | null>(null);
+  const fadeAnim = React.useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
 
-  const cuisineTypes = ['All', 'Japanese', 'Chinese', 'Thai', 'Italian', 'Indian'];
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
-  const filteredReviews = MOCK_REVIEWS.filter(review => {
-    const matchesSearch = review.restaurantName.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCuisine = !selectedCuisine || selectedCuisine === 'All' || review.cuisine === selectedCuisine;
-    return matchesSearch && matchesCuisine;
-  });
-
-  const renderReviewCard = ({ item }: { item: typeof MOCK_REVIEWS[0] }) => (
-    <TouchableOpacity style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.cardImage} />
-      <View style={styles.cardContent}>
-        <Text style={styles.restaurantName}>{item.restaurantName}</Text>
-        <View style={styles.ratingContainer}>
-          <Text style={styles.rating}>★ {item.rating}</Text>
-          <Text style={styles.reviewCount}>({item.reviewCount})</Text>
-        </View>
-        <View style={styles.detailsRow}>
-          <Text style={styles.cuisine}>{item.cuisine}</Text>
-          <Text style={styles.price}>{item.priceLevel}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    return '★'.repeat(fullStars) + (hasHalfStar ? '½' : '');
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search restaurants..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </View>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Reviews</Text>
+          <Text style={styles.subtitle}>See what others are saying</Text>
+        </View>
 
-      <View style={styles.cuisineFilter}>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={cuisineTypes}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.cuisineButton,
-                selectedCuisine === item && styles.selectedCuisine
-              ]}
-              onPress={() => setSelectedCuisine(item)}
-            >
-              <Text style={[
-                styles.cuisineButtonText,
-                selectedCuisine === item && styles.selectedCuisineText
-              ]}>
-                {item}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+        <View style={styles.reviewsContainer}>
+          {MOCK_REVIEWS.map((review) => (
+            <View key={review.id} style={styles.reviewCard}>
+              <View style={styles.reviewHeader}>
+                <Image source={{ uri: review.userImage }} style={styles.userImage} />
+                <View style={styles.reviewHeaderText}>
+                  <Text style={styles.userName}>{review.userName}</Text>
+                  <Text style={styles.reviewDate}>{review.date}</Text>
+                </View>
+                <Text style={styles.rating}>{renderStars(review.rating)}</Text>
+              </View>
+              
+              <Text style={styles.reviewContent}>{review.content}</Text>
+              
+              <View style={styles.reviewFooter}>
+                <TouchableOpacity style={styles.helpfulButton}>
+                  <Text style={styles.helpfulButtonText}>Helpful ({review.helpful})</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+        </View>
 
-      <FlatList
-        data={filteredReviews}
-        renderItem={renderReviewCard}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+        <TouchableOpacity 
+          style={styles.writeReviewButton}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.writeReviewButtonText}>Write a Review</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
+    backgroundColor: '#334027',
   },
-  searchContainer: {
-    padding: 10,
+  content: {
+    padding: 20,
   },
-  searchInput: {
-    backgroundColor: '#f5f5f5',
-    padding: 10,
-    borderRadius: 20,
+  header: {
+    marginBottom: 24,
+  },
+  title: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 28,
+    color: '#94B06B',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontFamily: 'Roboto',
     fontSize: 16,
+    color: '#F4F7EE',
+    opacity: 0.9,
   },
-  cuisineFilter: {
-    marginVertical: 10,
-    height: 50,
+  reviewsContainer: {
+    gap: 16,
   },
-  cuisineButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    marginHorizontal: 5,
-    borderRadius: 20,
-    backgroundColor: '#f5f5f5',
+  reviewCard: {
+    backgroundColor: '#192112',
+    borderRadius: 16,
+    padding: 16,
+    gap: 12,
   },
-  selectedCuisine: {
-    backgroundColor: '#FF6B6B',
-  },
-  cuisineButtonText: {
-    color: '#666',
-    fontSize: 14,
-  },
-  selectedCuisineText: {
-    color: '#fff',
-  },
-  columnWrapper: {
-    justifyContent: 'space-between',
-  },
-  card: {
-    width: '48%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginBottom: 15,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  cardImage: {
-    width: '100%',
-    height: 120,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
-  cardContent: {
-    padding: 10,
-  },
-  restaurantName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  ratingContainer: {
+  reviewHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+  },
+  userImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 12,
+  },
+  reviewHeaderText: {
+    flex: 1,
+  },
+  userName: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    color: '#F4F7EE',
+  },
+  reviewDate: {
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    color: '#E6EDDA',
+    opacity: 0.8,
   },
   rating: {
-    color: '#FFC107',
-    marginRight: 5,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    color: '#94B06B',
   },
-  reviewCount: {
-    color: '#666',
-    fontSize: 12,
+  reviewContent: {
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    color: '#F4F7EE',
+    lineHeight: 22,
   },
-  detailsRow: {
+  reviewFooter: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+    marginTop: 8,
+  },
+  helpfulButton: {
+    backgroundColor: '#334027',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+  },
+  helpfulButtonText: {
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    color: '#94B06B',
+  },
+  writeReviewButton: {
+    backgroundColor: '#94B06B',
+    paddingVertical: 16,
+    borderRadius: 16,
     alignItems: 'center',
+    marginTop: 24,
   },
-  cuisine: {
-    color: '#666',
-    fontSize: 12,
-  },
-  price: {
-    color: '#4CAF50',
-    fontSize: 12,
+  writeReviewButtonText: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    color: '#192112',
+    letterSpacing: 0.5,
   },
 }); 

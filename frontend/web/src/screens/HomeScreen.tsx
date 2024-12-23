@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/types';
@@ -8,34 +8,68 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const fadeAnim = React.useRef(new Animated.Value(0)).current;
+  const scaleAnim = React.useRef(new Animated.Value(0.95)).current;
+
+  React.useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>SmartDine</Text>
-      <Text style={styles.subtitle}>Where should I eat today?</Text>
-      
-      <TouchableOpacity 
-        style={styles.startButton}
-        onPress={() => navigation.navigate('Selection')}
+      <Animated.View
+        style={[
+          styles.content,
+          {
+            opacity: fadeAnim,
+            transform: [{ scale: scaleAnim }],
+          },
+        ]}
       >
-        <Text style={styles.buttonText}>Start Selection</Text>
-      </TouchableOpacity>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>SmartDine</Text>
+          <Text style={styles.subtitle}>Find your perfect dining spot</Text>
+        </View>
 
-      <View style={styles.bottomNav}>
-        <TouchableOpacity 
-          style={styles.navButton}
-          onPress={() => navigation.navigate('Reviews')}
-        >
-          <Text style={styles.navButtonText}>Reviews</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.startButton}
+            onPress={() => navigation.navigate('Selection')}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.startButtonText}>Start Selection</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.navButton}
-          onPress={() => navigation.navigate('Profile')}
-        >
-          <Text style={styles.navButtonText}>Profile</Text>
-        </TouchableOpacity>
-      </View>
+          <View style={styles.secondaryButtons}>
+            <TouchableOpacity
+              style={styles.secondaryButton}
+              onPress={() => navigation.navigate('Reviews')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>Reviews</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.secondaryButton}
+              onPress={() => navigation.navigate('Profile')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>Profile</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Animated.View>
     </View>
   );
 }
@@ -43,51 +77,62 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#334027',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'space-between',
     padding: 20,
   },
+  titleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   title: {
-    fontSize: 42,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
+    fontFamily: 'Roboto-Bold',
+    fontSize: 48,
+    color: '#94B06B',
+    marginBottom: 12,
+    letterSpacing: 1,
   },
   subtitle: {
-    fontSize: 24,
-    marginBottom: 40,
-    color: '#666',
+    fontFamily: 'Roboto',
+    fontSize: 18,
+    color: '#F4F7EE',
+    opacity: 0.9,
+    letterSpacing: 0.5,
+  },
+  buttonContainer: {
+    gap: 20,
   },
   startButton: {
-    backgroundColor: '#FF6B6B',
-    paddingHorizontal: 40,
-    paddingVertical: 15,
-    borderRadius: 25,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    backgroundColor: '#94B06B',
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
+  startButtonText: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 18,
+    color: '#192112',
+    letterSpacing: 0.5,
   },
-  bottomNav: {
-    position: 'absolute',
-    bottom: 40,
+  secondaryButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingHorizontal: 20,
+    gap: 12,
   },
-  navButton: {
-    padding: 10,
+  secondaryButton: {
+    flex: 1,
+    backgroundColor: '#192112',
+    paddingVertical: 14,
+    borderRadius: 16,
+    alignItems: 'center',
   },
-  navButtonText: {
-    color: '#666',
+  secondaryButtonText: {
+    fontFamily: 'Roboto',
     fontSize: 16,
+    color: '#E6EDDA',
+    letterSpacing: 0.5,
   },
 }); 
