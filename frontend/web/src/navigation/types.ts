@@ -1,7 +1,8 @@
 export interface SelectionState {
-  cuisine?: string;
-  priceRange?: string;
-  distance?: number;
+  cuisine: string | null;
+  priceRange: string | null;
+  mood: string | null;
+  distance: number | null;
 }
 
 export type RootStackParamList = {
@@ -16,4 +17,6 @@ export type BottomTabParamList = {
   SelectionFlow: undefined;
   Reviews: undefined;
   Profile: undefined;
-}; 
+};
+
+export type SelectionKey = keyof SelectionState; 

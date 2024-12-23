@@ -1,27 +1,48 @@
 import create from 'zustand';
 import { SelectionState } from '../navigation/types';
 
-interface StoreState {
-  selectionState: SelectionState;
-  currentRestaurant: any;
-  updateSelection: (key: keyof SelectionState, value: string | number) => void;
-  resetSelection: () => void;
-  setCurrentRestaurant: (restaurant: any) => void;
+interface Restaurant {
+  name: string;
+  cuisine: string;
+  rating: number;
+  priceLevel: string;
+  distance: string;
+  image: string;
+  tags: string[];
+  openNow: boolean;
 }
 
+interface StoreState {
+  selectionState: SelectionState;
+  currentRestaurant: Restaurant | null;
+  updateSelection: (key: keyof SelectionState, value: any) => void;
+  resetSelection: () => void;
+  setCurrentRestaurant: (restaurant: Restaurant) => void;
+}
+
+const initialSelectionState: SelectionState = {
+  cuisine: null,
+  priceRange: null,
+  mood: null,
+  distance: null,
+};
+
 export const useStore = create<StoreState>((set) => ({
-  selectionState: {
-    cuisine: undefined,
-    priceRange: undefined,
-    distance: undefined,
-  },
+  selectionState: initialSelectionState,
   currentRestaurant: null,
-  updateSelection: (key, value) => 
+  updateSelection: (key, value) =>
     set((state) => ({
-      selectionState: { ...state.selectionState, [key]: value }
+      selectionState: {
+        ...state.selectionState,
+        [key]: value,
+      },
     })),
-  resetSelection: () => 
-    set({ selectionState: { cuisine: undefined, priceRange: undefined, distance: undefined } }),
-  setCurrentRestaurant: (restaurant) => 
-    set({ currentRestaurant: restaurant }),
+  resetSelection: () =>
+    set(() => ({
+      selectionState: initialSelectionState,
+    })),
+  setCurrentRestaurant: (restaurant) =>
+    set(() => ({
+      currentRestaurant: restaurant,
+    })),
 })); 

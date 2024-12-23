@@ -1,5 +1,7 @@
 import React from 'react';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import SelectionScreen from '../screens/SelectionScreen';
 import ResultScreen from '../screens/ResultScreen';
@@ -12,7 +14,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function RootNavigator() {
   return (
     <Stack.Navigator
-      screenOptions={{
+      screenOptions={({ navigation, route }) => ({
         headerStyle: {
           backgroundColor: '#192112',
           elevation: 0,
@@ -27,7 +29,33 @@ export default function RootNavigator() {
         cardStyle: {
           backgroundColor: '#334027',
         },
-      }}
+        headerRight: () => (
+          <View style={styles.headerButtons}>
+            {navigation.canGoBack() && (
+              <TouchableOpacity
+                style={styles.headerButton}
+                onPress={() => navigation.navigate('Home')}
+              >
+                <Ionicons name="home-outline" size={24} color="#94B06B" />
+              </TouchableOpacity>
+            )}
+            {route.name !== 'Selection' && route.name !== 'Home' && (
+              <TouchableOpacity
+                style={styles.headerButton}
+                onPress={() => navigation.navigate('Selection')}
+              >
+                <Ionicons name="add-circle-outline" size={24} color="#94B06B" />
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={() => navigation.navigate('Profile')}
+            >
+              <Ionicons name="person-outline" size={24} color="#94B06B" />
+            </TouchableOpacity>
+          </View>
+        ),
+      })}
     >
       <Stack.Screen 
         name="Home" 
@@ -56,4 +84,16 @@ export default function RootNavigator() {
       />
     </Stack.Navigator>
   );
-} 
+}
+
+const styles = StyleSheet.create({
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerButton: {
+    marginLeft: 8,
+    marginRight: 8,
+    padding: 8,
+  },
+}); 
