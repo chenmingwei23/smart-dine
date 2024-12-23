@@ -53,12 +53,7 @@ def setup_database():
         print(f"\nConnecting to MongoDB Atlas database: {db_name}")
         
         # Configure MongoDB client
-        client = MongoClient(
-            mongo_url,
-            ssl=True,
-            ssl_cert_reqs=ssl.CERT_NONE,
-            serverSelectionTimeoutMS=5000
-        )
+        client = MongoClient(mongo_url)
         
         # Test connection
         client.admin.command('ping')
@@ -75,16 +70,16 @@ def setup_database():
         # Create indexes for restaurants collection
         print("\nSetting up indexes for restaurants collection...")
         restaurants = db[restaurants_collection]
-        create_index(restaurants, "url", unique=True)
+        create_index(restaurants, [("url", ASCENDING)], unique=True)
         create_index(restaurants, [("location.lat", ASCENDING), ("location.lng", ASCENDING)])
-        create_index(restaurants, "cuisine_type")
-        create_index(restaurants, "overall_rating")
+        create_index(restaurants, [("cuisine_type", ASCENDING)])
+        create_index(restaurants, [("overall_rating", ASCENDING)])
         
         # Create indexes for reviews collection
         print("\nSetting up indexes for reviews collection...")
         reviews = db[reviews_collection]
-        create_index(reviews, "id_review", unique=True)
-        create_index(reviews, "restaurant_id")
+        create_index(reviews, [("id_review", ASCENDING)], unique=True)
+        create_index(reviews, [("restaurant_id", ASCENDING)])
         
         print("\nDatabase setup completed successfully!")
         
