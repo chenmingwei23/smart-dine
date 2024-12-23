@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/types';
 import { useStore } from '../store';
@@ -23,8 +23,17 @@ export default function SelectionScreen() {
   const pricesAnim = React.useRef(PRICE_RANGES.map(() => new Animated.Value(0))).current;
   const distancesAnim = React.useRef(DISTANCES.map(() => new Animated.Value(0))).current;
 
-  React.useEffect(() => {
-    // Sequence animations
+  const startAnimations = React.useCallback(() => {
+    // Reset all animation values
+    fadeAnim.setValue(0);
+    titleAnim.setValue(0);
+    scaleAnim.setValue(0.95);
+    optionsAnim.forEach(anim => anim.setValue(0));
+    moodsAnim.forEach(anim => anim.setValue(0));
+    pricesAnim.forEach(anim => anim.setValue(0));
+    distancesAnim.forEach(anim => anim.setValue(0));
+
+    // Start animations sequence
     Animated.sequence([
       // First fade in the content
       Animated.parallel([
@@ -56,6 +65,14 @@ export default function SelectionScreen() {
       )),
     ]).start();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset selection state and restart animations when screen comes into focus
+      resetSelection();
+      startAnimations();
+    }, [resetSelection, startAnimations])
+  );
 
   React.useEffect(() => {
     if (selectionState.cuisine) {
@@ -232,17 +249,17 @@ export default function SelectionScreen() {
               <View style={styles.distanceGrid}>
                 {DISTANCES.map((distance, index) => renderOption(distance, index, 'distance'))}
               </View>
+
+              <TouchableOpacity 
+                style={styles.resetButton}
+                onPress={resetSelection}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.resetButtonText}>Start Over</Text>
+              </TouchableOpacity>
             </View>
           )}
         </Animated.View>
-
-        <TouchableOpacity 
-          style={styles.resetButton}
-          onPress={resetSelection}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.resetButtonText}>Start Over</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -380,7 +397,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    marginVertical: 20,
+    marginTop: 32,
   },
   resetButtonText: {
     fontFamily: 'Roboto',
