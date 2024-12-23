@@ -299,18 +299,47 @@ class GoogleMapsScraper:
             category_div = response.find('div', class_='skqShb')
             if category_div:
                 categories = []
+                price_level = None
+                rating_info = None
+                
                 for span in category_div.find_all('span'):
                     text = re.sub(r'[^\x00-\x7F]+', '', span.text.strip())  # Remove non-ASCII chars
-                    if text and not text.startswith('(') and not text.startswith('·'):
-                        categories.append(text)
+                    
+                    # Skip empty or bullet point texts
+                    if not text or text == '·':
+                        continue
+                        
+                    # Check if it's a rating
+                    if re.match(r'^\d+\.?\d*$', text):
+                        rating_info = float(text)
+                        continue
+                        
+                    # Check if it's a review count in parentheses
+                    if text.startswith('(') and text.endswith(')'):
+                        continue
+                        
+                    # Check if it's a price range
+                    if text.startswith('USD'):
+                        price_text = text.replace('USD', '$').replace(' ', '')
+                        if '-' in price_text:
+                            # If it's a range like "$10-20", just count the dollar signs
+                            price_level = 1
+                        else:
+                            # Count the dollar signs
+                            price_level = text.count('$')
+                        continue
+                    
+                    # If we get here, it's probably a cuisine type
+                    if text and not any(x in text for x in ['USD', '$', '(', ')']):
+                        # Avoid duplicates
+                        if text not in categories:
+                            categories.append(text)
                 
+                # Set the attributes
                 if categories:
-                    # First item might be price level
-                    if categories[0].startswith('$'):
-                        place['attributes']['price_level'] = len(categories[0])
-                        place['attributes']['cuisine_type'] = categories[1:]
-                    else:
-                        place['attributes']['cuisine_type'] = categories
+                    place['attributes']['cuisine_type'] = categories
+                if price_level is not None:
+                    place['attributes']['price_level'] = price_level
 
             # Parse reviews
             reviews_container = response.find_all('div', class_='jftiEf fontBodyMedium')
