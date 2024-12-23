@@ -330,7 +330,167 @@ If activation fails, ensure you're using the correct path:
 Always use backslashes (`\`) for paths in PowerShell instead of forward slashes (`/`)
 
 ## Project Structure
-[Include the project structure from README.md]
 
-## Common Issues and Solutions
-[To be populated as issues arise] 
+```
+smart-dine/
+├── api-gateway/           # API Gateway Service
+│   ├── src/              # Gateway source code
+│   ├── Dockerfile        # Container configuration
+│   └── requirements.txt  # Python dependencies
+│
+├── backend/              # Backend Services
+│   ├── src/             # Backend source code
+│   ├── Dockerfile       # Container configuration
+│   └── requirements.txt # Python dependencies
+│
+├── data-crawler-python/  # Restaurant Data Crawler
+│   ├── scripts/         # Utility scripts
+│   │   ├── commands/    # Development command scripts
+│   │   │   └── dev.ps1 # PowerShell script for dev commands
+│   │   ├── clean_db.py # Script to clean MongoDB collections
+│   │   └── setup_db.py # Script to set up MongoDB indexes
+│   ├── src/            # Crawler source code
+│   │   ├── crawler/    # Web crawler implementation
+│   │   ├── database/   # Database operations
+│   │   ├── models/     # Data models
+│   │   └── config/     # Configuration settings
+│   ├── dev.bat        # Development command runner
+│   └── README.md      # Crawler documentation
+│
+├── frontend/            # Frontend Applications
+│   └── web/           # Web application
+│
+├── scripts/            # Project-wide scripts
+│   ├── setup.sh       # Project setup script
+│   └── restructure.sh # Code restructuring script
+│
+├── docs/              # Project documentation
+├── .github/           # GitHub configuration and workflows
+├── docker-compose.yml # Docker services configuration
+└── DEVELOPMENT.md     # This file
+```
+
+## Data Crawler
+
+The data crawler is a Python application that scrapes restaurant data from Google Maps and stores it in MongoDB.
+
+### Setup
+
+1. Install Python dependencies:
+```bash
+cd data-crawler-python
+pip install -r requirements.txt
+```
+
+2. Set up environment variables:
+```bash
+# MongoDB connection
+CRAWLER_MONGODB_URL=your_mongodb_url
+CRAWLER_MONGODB_DB=smartdine
+CRAWLER_MONGODB_COLLECTION_RESTAURANTS=restaurants
+CRAWLER_MONGODB_COLLECTION_REVIEWS=reviews
+
+# Crawler settings
+CRAWLER_AREA="San Francisco, CA"
+CRAWLER_RADIUS_KM=5
+CRAWLER_MAX_RESTAURANTS=10
+CRAWLER_MAX_REVIEWS_PER_RESTAURANT=20
+CRAWLER_MIN_RATING=4.0
+CRAWLER_LOG_LEVEL=INFO
+```
+
+### Development Commands
+
+The crawler includes a command-line interface for common development tasks. From the `data-crawler-python` directory:
+
+```bash
+# Show available commands
+.\dev.bat help
+
+# Run the crawler (cleans DB first)
+.\dev.bat run
+
+# Clean the database only
+.\dev.bat clean
+```
+
+### Data Model
+
+#### Restaurant Document
+```json
+{
+  "_id": "restaurant_name_postal",
+  "name": "Restaurant Name",
+  "url": "Google Maps URL",
+  "location": {
+    "type": "Point",
+    "coordinates": [longitude, latitude],
+    "address": "Full address",
+    "postal_code": "12345",
+    "city": "City",
+    "state": "State",
+    "country": "Country"
+  },
+  "attributes": {
+    "cuisine_type": ["Cuisine 1", "Cuisine 2"],
+    "price_level": 2
+  },
+  "phone": "Phone number",
+  "website": "Website URL",
+  "opening_hours": [],
+  "overall_rating": 4.5,
+  "total_reviews": 100,
+  "photos": []
+}
+```
+
+#### Review Document
+```json
+{
+  "_id": "restaurant_id_review_123",
+  "id_review": "restaurant_id_review_123",
+  "restaurant_id": "restaurant_name_postal",
+  "text": "Review text",
+  "date": "Review date",
+  "rating": 5,
+  "reviewer": {
+    "name": "Reviewer name",
+    "total_reviews": 10,
+    "photo_count": 5,
+    "url": "Reviewer profile URL"
+  }
+}
+```
+
+### MongoDB Indexes
+
+The following indexes are maintained:
+- Restaurants:
+  - `name`: For name-based searches
+  - `url`: For unique restaurant identification
+  - `overall_rating`: For sorting by rating
+  - `attributes.cuisine_type`: For cuisine-based searches
+  - `attributes.price_level`: For price-based filtering
+  - `location.coordinates`: 2dsphere index for geospatial queries
+
+- Reviews:
+  - `restaurant_id`: For finding reviews by restaurant
+  - `rating`: For sorting by rating
+  - `date`: For sorting by date
+
+### Recent Changes
+
+1. Improved data model:
+   - Separated restaurant and review data into distinct collections
+   - Added proper GeoJSON structure for location data
+   - Better handling of cuisine types and price levels
+
+2. Enhanced crawler:
+   - Better parsing of restaurant attributes
+   - Improved error handling and logging
+   - Fixed special character handling
+
+3. Added development tools:
+   - New command-line interface (`dev.bat`)
+   - Database cleanup and setup scripts
+   - Better development workflow 
