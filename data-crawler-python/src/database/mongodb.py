@@ -4,31 +4,61 @@ Handles all database interactions for storing and retrieving restaurant data.
 """
 
 from typing import List, Optional
+import ssl
+from urllib.parse import quote_plus
+
 from pymongo import MongoClient, UpdateOne
 from pymongo.collection import Collection
+from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 
-from ..models.restaurant import Restaurant, Review
+from models.restaurant import Restaurant, Review
+from config.settings import settings
 
 class MongoDBClient:
     """MongoDB client for restaurant data storage."""
     
-    def __init__(self, mongo_url: str = "mongodb://localhost:27017/", 
-                 db_name: str = "smartdine"):
-        self.client = MongoClient(mongo_url)
-        self.db = self.client[db_name]
-        self.restaurants: Collection = self.db.restaurants
-        self.reviews: Collection = self.db.reviews
+    def __init__(self, mongo_url: str = None, db_name: str = None):
+        """Initialize MongoDB client with Atlas support.
         
-        # Create indexes
-        self._create_indexes()
+        Args:
+            mongo_url: MongoDB connection URL. If None, uses settings.mongodb_url
+            db_name: Database name. If None, uses settings.mongodb_db
+        """
+        self.mongo_url = mongo_url or settings.mongodb_url
+        self.db_name = db_name or settings.mongodb_db
+        
+        try:
+            # Configure MongoDB client with proper SSL settings for Atlas
+            self.client = MongoClient(
+                self.mongo_url,
+                ssl=True,
+                ssl_cert_reqs=ssl.CERT_NONE,
+                serverSelectionTimeoutMS=5000
+            )
+            
+            # Test connection
+            self.client.admin.command('ping')
+            
+            self.db = self.client[self.db_name]
+            self.restaurants: Collection = self.db[settings.mongodb_collection_restaurants]
+            self.reviews: Collection = self.db[settings.mongodb_collection_reviews]
+            
+            # Create indexes
+            self._create_indexes()
+            
+        except (ConnectionFailure, ServerSelectionTimeoutError) as e:
+            raise ConnectionError(f"Failed to connect to MongoDB Atlas: {str(e)}")
     
     def _create_indexes(self):
         """Create necessary database indexes."""
-        self.restaurants.create_index("url", unique=True)
-        self.reviews.create_index("id_review", unique=True)
-        self.restaurants.create_index([("location.lat", 1), ("location.lng", 1)])
-        self.restaurants.create_index("cuisine_type")
-        self.restaurants.create_index("overall_rating")
+        try:
+            self.restaurants.create_index("url", unique=True)
+            self.reviews.create_index("id_review", unique=True)
+            self.restaurants.create_index([("location.lat", 1), ("location.lng", 1)])
+            self.restaurants.create_index("cuisine_type")
+            self.restaurants.create_index("overall_rating")
+        except Exception as e:
+            raise Exception(f"Failed to create indexes: {str(e)}")
     
     def upsert_restaurant(self, restaurant: Restaurant) -> str:
         """Upsert a restaurant and return its ID."""
