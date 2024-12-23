@@ -1,63 +1,41 @@
 """
-Application settings and configuration.
+Configuration settings for the crawler.
 """
 
 import os
-from typing import Dict, List
-from pathlib import Path
-from pydantic import Field, ConfigDict
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from dotenv import load_dotenv
+import logging
 
-# Load environment variables from .env file
-env_path = Path(__file__).parent.parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
+class Settings:
+    """Settings class for the crawler."""
+    
+    def __init__(self):
+        """Initialize settings from environment variables."""
+        # MongoDB settings
+        self.MONGODB_URL = os.getenv('CRAWLER_MONGODB_URL', 'mongodb+srv://admin:admin@cluster0.h11zy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+        self.MONGODB_DB = os.getenv('CRAWLER_MONGODB_DB', 'smartdine')
+        self.MONGODB_COLLECTION_RESTAURANTS = os.getenv('CRAWLER_MONGODB_COLLECTION_RESTAURANTS', 'restaurants')
+        self.MONGODB_COLLECTION_REVIEWS = os.getenv('CRAWLER_MONGODB_COLLECTION_REVIEWS', 'reviews')
+        
+        # Crawler settings
+        self.area = os.getenv('CRAWLER_AREA', 'San Francisco, CA')
+        self.radius_km = float(os.getenv('CRAWLER_RADIUS_KM', '5'))
+        self.max_restaurants = int(os.getenv('CRAWLER_MAX_RESTAURANTS', '1'))
+        self.max_reviews_per_restaurant = int(os.getenv('CRAWLER_MAX_REVIEWS_PER_RESTAURANT', '20'))
+        self.min_rating = float(os.getenv('CRAWLER_MIN_RATING', '4.0'))
+        
+        # Logging settings
+        self.log_level = os.getenv('CRAWLER_LOG_LEVEL', 'INFO')
+        self.log_format = '%(asctime)s - %(levelname)s - %(message)s'
+        
+        # Print loaded settings
+        print("\nEnvironment variables:")
+        print(f"CRAWLER_MONGODB_URL: {self.MONGODB_URL}")
+        print(f"All env vars: {os.environ}")
+        print("\n\nLoaded settings:")
+        print(f"MongoDB URL: {self.MONGODB_URL}")
+        print(f"MongoDB DB: {self.MONGODB_DB}")
+        print(f"Area: {self.area}")
+        print(f"Max restaurants: {self.max_restaurants}")
+        print(f"Min rating: {self.min_rating}")
 
-# Get MongoDB URL from environment
-mongodb_url = os.getenv('CRAWLER_MONGODB_URL', 'mongodb://localhost:27017/')
-print(f"\nEnvironment variables:")
-print(f"CRAWLER_MONGODB_URL: {mongodb_url}")
-print(f"All env vars: {dict(os.environ)}\n")
-
-class Settings(BaseSettings):
-    """Crawler configuration settings."""
-    
-    model_config = SettingsConfigDict(
-        env_file=str(env_path),
-        env_file_encoding='utf-8',
-        case_sensitive=False,
-        extra='allow'
-    )
-    
-    # Search configuration
-    area: str = Field(default="San Francisco, CA", env="CRAWLER_AREA")
-    radius_km: int = Field(default=5, env="CRAWLER_RADIUS_KM")
-    max_restaurants: int = Field(default=1, env="CRAWLER_MAX_RESTAURANTS")
-    max_reviews_per_restaurant: int = Field(default=20, env="CRAWLER_MAX_REVIEWS_PER_RESTAURANT")
-    
-    # Restaurant filters
-    min_rating: float = Field(default=4.0, env="CRAWLER_MIN_RATING")
-    cuisine_types: List[str] = []
-    price_levels: List[int] = []
-    
-    # MongoDB settings
-    mongodb_url: str = "mongodb+srv://admin:admin@cluster0.h11zy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    mongodb_db: str = "smartdine"
-    mongodb_collection_restaurants: str = "restaurants"
-    mongodb_collection_reviews: str = "reviews"
-    
-    # Logging settings
-    log_level: str = Field(default="INFO", env="CRAWLER_LOG_LEVEL")
-    log_format: str = "%(asctime)s - %(levelname)s - %(message)s"
-    log_file: str = "crawler.log"
-
-# Create settings instance
-settings = Settings()
-
-# Debug output
-print("\nLoaded settings:")
-print(f"MongoDB URL: {settings.mongodb_url}")
-print(f"MongoDB DB: {settings.mongodb_db}")
-print(f"Area: {settings.area}")
-print(f"Max restaurants: {settings.max_restaurants}")
-print(f"Min rating: {settings.min_rating}\n") 
+settings = Settings() 

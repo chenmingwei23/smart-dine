@@ -42,17 +42,39 @@ class MongoDBClient:
     
     def create_indexes(self):
         """Create indexes for restaurants and reviews collections."""
-        logger.info("Creating indexes for restaurants collection")
-        self.restaurants.create_index([("name", ASCENDING)], unique=True)
-        self.restaurants.create_index([("overall_rating", DESCENDING)])
-        self.restaurants.create_index([("cuisine_type", ASCENDING)])
-        self.restaurants.create_index([("price_level", ASCENDING)])
-        self.restaurants.create_index([("location", "2dsphere")])
-
-        logger.info("Creating indexes for reviews collection")
-        self.reviews.create_index([("restaurant_id", ASCENDING)])
-        self.reviews.create_index([("rating", DESCENDING)])
-        self.reviews.create_index([("date", DESCENDING)])
+        try:
+            logger.info("Creating indexes for restaurants collection")
+            
+            # Drop existing indexes except _id
+            logger.info("Dropping existing indexes")
+            for index in self.restaurants.list_indexes():
+                if index['name'] != '_id_':
+                    self.restaurants.drop_index(index['name'])
+            for index in self.reviews.list_indexes():
+                if index['name'] != '_id_':
+                    self.reviews.drop_index(index['name'])
+            
+            # Create new indexes
+            logger.info("Creating new indexes")
+            self.restaurants.create_index([("name", ASCENDING)])
+            self.restaurants.create_index([("url", ASCENDING)])
+            self.restaurants.create_index([("overall_rating", DESCENDING)])
+            self.restaurants.create_index([("attributes.cuisine_type", ASCENDING)])
+            self.restaurants.create_index([("attributes.price_level", ASCENDING)])
+            
+            # Create 2dsphere index only if coordinates are present
+            self.restaurants.create_index([("location.coordinates", "2dsphere")])
+            
+            logger.info("Creating indexes for reviews collection")
+            self.reviews.create_index([("restaurant_id", ASCENDING)])
+            self.reviews.create_index([("rating", DESCENDING)])
+            self.reviews.create_index([("date", DESCENDING)])
+            
+            logger.info("All indexes created successfully")
+            
+        except Exception as e:
+            logger.error(f"Error creating indexes: {str(e)}")
+            raise
     
     def upsert_restaurant(self, restaurant_data: dict):
         """Upsert a restaurant document."""
@@ -82,12 +104,20 @@ class MongoDBClient:
                 restaurant_id = self.__generate_restaurant_id(name)
                 logger.info(f"Generated new ID from name: {restaurant_id}")
             
-            # Remove _id and reviews from update data
+            # Remove _id from update data
             if '_id' in update_data:
                 del update_data['_id']
-            if 'reviews' in update_data:
-                del update_data['reviews']
-            logger.debug("Removed _id and reviews from update data")
+            
+            # Clean up location data for GeoJSON
+            if 'location' in update_data:
+                location = update_data['location']
+                # Only include coordinates if they exist and are valid
+                if not location.get('coordinates') or len(location['coordinates']) != 2:
+                    # Remove coordinates if they're not valid GeoJSON
+                    if 'coordinates' in location:
+                        del location['coordinates']
+                    if 'type' in location:
+                        del location['type']
             
             # First try to find by URL (since it's unique)
             existing = None
@@ -102,11 +132,9 @@ class MongoDBClient:
                 query = {"_id": existing["_id"]}
                 # Merge existing data with update data
                 update_data = {**existing, **update_data}
-                # Remove _id and reviews from update data again
+                # Remove _id from update data again
                 if '_id' in update_data:
                     del update_data['_id']
-                if 'reviews' in update_data:
-                    del update_data['reviews']
                 logger.info(f"Using existing restaurant ID for update: {existing['_id']}")
             else:
                 # Otherwise use our generated/provided _id

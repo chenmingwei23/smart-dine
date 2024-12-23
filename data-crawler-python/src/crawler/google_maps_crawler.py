@@ -202,7 +202,21 @@ class GoogleMapsScraper:
 
     def __parse_place(self, response, url: str) -> Dict:
         """Parse restaurant details from the page."""
-        place = {'url': url}
+        place = {
+            'url': url,
+            'location': {
+                'type': 'Point',
+                'coordinates': [],  # Will be populated with [lng, lat] if available
+                'address': None,
+                'postal_code': None,
+                'city': None,
+                'state': None,
+                'country': None
+            },
+            'attributes': {},
+            'opening_hours': [],
+            'photos': []
+        }
         reviews = []
         
         try:
@@ -234,19 +248,69 @@ class GoogleMapsScraper:
             place['_id'] = self.__generate_unique_key(place['name'])
             logger.info(f"Generated ID '{place['_id']}' for restaurant '{place['name']}'")
 
-            # Parse address for postal code if available
+            # Parse address and location details
             address_element = response.find('button', {'data-item-id': 'address'})
             if address_element:
-                place['address'] = address_element.text.strip()
-                logger.info(f"Found address: {place['address']}")
+                # Clean the address text by removing special characters
+                address = re.sub(r'[^\x00-\x7F]+', '', address_element.text.strip())
+                place['location']['address'] = address
+                logger.info(f"Found address: {address}")
+                
                 # Try to extract postal code from address
-                postal_match = re.search(r'\b\d{5}\b', place['address'])
+                postal_match = re.search(r'\b\d{5}\b', address)
                 if postal_match:
-                    place['postal_code'] = postal_match.group(0)
-                    logger.info(f"Extracted postal code: {place['postal_code']}")
+                    postal_code = postal_match.group(0)
+                    place['location']['postal_code'] = postal_code
+                    logger.info(f"Extracted postal code: {postal_code}")
                     # Update ID with postal code if available
-                    place['_id'] = self.__generate_unique_key(place['name'], place['postal_code'])
+                    place['_id'] = self.__generate_unique_key(place['name'], postal_code)
                     logger.info(f"Updated ID with postal code: {place['_id']}")
+                
+                # Try to parse address components
+                address_parts = address.split(',')
+                if len(address_parts) >= 3:
+                    place['location']['city'] = address_parts[-3].strip()
+                    state_zip = address_parts[-2].strip().split()
+                    if len(state_zip) >= 1:
+                        place['location']['state'] = state_zip[0]
+                    place['location']['country'] = address_parts[-1].strip()
+
+            # Try to extract coordinates from URL
+            coords_match = re.search(r'!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)', url)
+            if coords_match:
+                lat = float(coords_match.group(1))
+                lng = float(coords_match.group(2))
+                place['location']['coordinates'] = [lng, lat]  # GeoJSON uses [longitude, latitude]
+                logger.info(f"Extracted coordinates: {lat}, {lng}")
+
+            # Parse phone number
+            phone_button = response.find('button', {'data-item-id': 'phone:tel:'})
+            if phone_button:
+                place['phone'] = phone_button.text.strip()
+                logger.info(f"Found phone number: {place['phone']}")
+
+            # Parse website
+            website_button = response.find('a', {'data-item-id': 'authority'})
+            if website_button:
+                place['website'] = website_button.get('href')
+                logger.info(f"Found website: {place['website']}")
+
+            # Parse attributes (price level, cuisine type)
+            category_div = response.find('div', class_='skqShb')
+            if category_div:
+                categories = []
+                for span in category_div.find_all('span'):
+                    text = re.sub(r'[^\x00-\x7F]+', '', span.text.strip())  # Remove non-ASCII chars
+                    if text and not text.startswith('(') and not text.startswith('·'):
+                        categories.append(text)
+                
+                if categories:
+                    # First item might be price level
+                    if categories[0].startswith('$'):
+                        place['attributes']['price_level'] = len(categories[0])
+                        place['attributes']['cuisine_type'] = categories[1:]
+                    else:
+                        place['attributes']['cuisine_type'] = categories
 
             # Parse reviews
             reviews_container = response.find_all('div', class_='jftiEf fontBodyMedium')
@@ -282,8 +346,8 @@ class GoogleMapsScraper:
                 # Calculate average rating and review count from reviews
                 ratings = [r['rating'] for r in reviews if r.get('rating')]
                 if ratings:
-                    place['rating'] = sum(ratings) / len(ratings)
-                    place['review_count'] = len(ratings)
+                    place['overall_rating'] = sum(ratings) / len(ratings)
+                    place['total_reviews'] = len(ratings)
 
             # Log the final place data before returning
             logger.info(f"Final restaurant data: {place}")
