@@ -1,6 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/types';
+
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Profile'>;
 
 const MOCK_USER = {
   name: 'John Doe',
@@ -18,6 +23,22 @@ const MOCK_USER = {
 };
 
 export default function ProfileScreen() {
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
+
+  const handleStatsPress = (type: 'visited' | 'reviews' | 'favorites') => {
+    switch (type) {
+      case 'reviews':
+        navigation.navigate('Reviews');
+        break;
+      case 'favorites':
+        navigation.navigate('Favorites');
+        break;
+      // For 'visited', we could add a new screen in the future
+      default:
+        break;
+    }
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
@@ -33,18 +54,27 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.statsContainer}>
-          <View style={styles.statItem}>
+          <TouchableOpacity 
+            style={styles.statItem}
+            onPress={() => handleStatsPress('visited')}
+          >
             <Text style={styles.statNumber}>{MOCK_USER.stats.restaurantsVisited}</Text>
             <Text style={styles.statLabel}>Visited</Text>
-          </View>
-          <View style={styles.statItem}>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.statItem}
+            onPress={() => handleStatsPress('reviews')}
+          >
             <Text style={styles.statNumber}>{MOCK_USER.stats.reviewsWritten}</Text>
             <Text style={styles.statLabel}>Reviews</Text>
-          </View>
-          <View style={styles.statItem}>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.statItem}
+            onPress={() => handleStatsPress('favorites')}
+          >
             <Text style={styles.statNumber}>{MOCK_USER.stats.favoritePlaces}</Text>
             <Text style={styles.statLabel}>Favorites</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
@@ -126,6 +156,7 @@ const styles = StyleSheet.create({
   },
   statItem: {
     alignItems: 'center',
+    padding: 8,
   },
   statNumber: {
     fontFamily: 'Roboto-Bold',

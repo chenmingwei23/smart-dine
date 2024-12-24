@@ -8,8 +8,9 @@ export interface SelectionState {
 export type RootStackParamList = {
   Home: undefined;
   Selection: undefined;
-  Result: { selections: SelectionState };
+  Result: undefined;
   Reviews: undefined;
+  Favorites: undefined;
   Profile: undefined;
 };
 

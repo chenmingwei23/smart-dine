@@ -7,11 +7,20 @@ import SelectionScreen from '../screens/SelectionScreen';
 import ResultScreen from '../screens/ResultScreen';
 import ReviewsScreen from '../screens/ReviewsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
 import { RootStackParamList } from './types';
+import { useStore } from '../store';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
+  const { resetSelection } = useStore();
+
+  const handleNewSelection = (navigation: any) => {
+    resetSelection();
+    navigation.navigate('Selection');
+  };
+
   return (
     <Stack.Navigator
       screenOptions={({ navigation, route }) => ({
@@ -42,11 +51,17 @@ export default function RootNavigator() {
             {route.name !== 'Selection' && route.name !== 'Home' && (
               <TouchableOpacity
                 style={styles.headerButton}
-                onPress={() => navigation.navigate('Selection')}
+                onPress={() => handleNewSelection(navigation)}
               >
-                <Ionicons name="add-circle-outline" size={24} color="#94B06B" />
+                <Ionicons name="restaurant-outline" size={24} color="#94B06B" />
               </TouchableOpacity>
             )}
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={() => navigation.navigate('Favorites')}
+            >
+              <Ionicons name="heart-outline" size={24} color="#94B06B" />
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.headerButton}
               onPress={() => navigation.navigate('Profile')}
@@ -76,6 +91,11 @@ export default function RootNavigator() {
         name="Reviews" 
         component={ReviewsScreen}
         options={{ title: 'Restaurant Reviews' }}
+      />
+      <Stack.Screen 
+        name="Favorites" 
+        component={FavoritesScreen}
+        options={{ title: 'Your Favorites' }}
       />
       <Stack.Screen 
         name="Profile" 
