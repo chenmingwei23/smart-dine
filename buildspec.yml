@@ -22,11 +22,12 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - cd ..
-      - printf '{"containerDefinitions":[{"name":"smart-dine-dev-backend","imageUri":"%s"}]}' $REPOSITORY_URI:$IMAGE_TAG > backend/imageDefinitions.json
-      - cat backend/imageDefinitions.json
+      - printf '{"containerDefinitions":[{"name":"smart-dine-dev-backend","imageUri":"%s"}]}' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
+      - cat imageDefinitions.json
 
 artifacts:
   files:
-    - backend/imageDefinitions.json
+    - imageDefinitions.json
     - appspec.yaml
-  discard-paths: yes 
+    - taskdef.json
+  discard-paths: no 
