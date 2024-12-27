@@ -1,5 +1,5 @@
 {
-    "executionRoleArn": "EXECUTION_ROLE_ARN",
+    "executionRoleArn": "arn:aws:iam::863518414064:role/SmartDineBackendStack-ServiceTaskExecutionRole1ADBF-GXEbHXV4kdCh",
     "containerDefinitions": [
         {
             "name": "smart-dine-dev-backend",
