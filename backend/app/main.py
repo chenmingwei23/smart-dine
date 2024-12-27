@@ -43,11 +43,8 @@ app.include_router(
 
 @app.get("/health")
 async def health_check():
-    return {
-        "status": "healthy",
-        "service": settings.PROJECT_NAME,
-        "version": settings.VERSION
-    }
+    """Health check endpoint for AWS ALB."""
+    return {"status": "healthy"}
 
 @app.get("/")
 async def root():
