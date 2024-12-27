@@ -1,12 +1,18 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      docker: 18
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo Copying deployment files...
+      - cp appspec.yaml $CODEBUILD_SRC_DIR/
+      - cp taskdef.json $CODEBUILD_SRC_DIR/
   build:
     commands:
       - echo Build started on `date`
@@ -24,10 +30,10 @@ phases:
       - cd ..
       - printf '{"containerDefinitions":[{"name":"smart-dine-dev-backend","imageUri":"%s"}]}' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
       - cat imageDefinitions.json
+      - pwd
+      - ls -la
 
 artifacts:
   files:
-    - imageDefinitions.json
-    - appspec.yaml
-    - taskdef.json
-  discard-paths: no 
+    - '**/*'
+  base-directory: $CODEBUILD_SRC_DIR 
