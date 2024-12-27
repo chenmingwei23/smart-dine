@@ -77,101 +77,114 @@
 
 ---
 
-## **System Architecture**  
+## **System Architecture**
 
 ```mermaid
-flowchart TD
-    subgraph FrontendLayer["Frontend Layer"]
-        direction TB
-        WebApp["React Native Web"]
-        iOSApp["React Native iOS"]
-        WeChatApp["WeChat Mini App"]
-        
-        subgraph FrontendServices["Frontend Services"]
-            Auth["Authentication"]
-            StateManagement["State Management"]
-            APIClient["API Client"]
-        end
-        
-        WebApp --> Auth
-        iOSApp --> Auth
-        WeChatApp --> Auth
-        Auth --> APIClient
-        APIClient --> StateManagement
+graph TB
+    %% Frontend Applications
+    subgraph Frontend["Frontend Applications"]
+        Web["Web App<br/>React"]
+        Mobile["Mobile App<br/>React Native"]
+        WeChat["WeChat Mini App"]
     end
 
-    subgraph APIGatewayLayer["API Gateway Layer"]
-        direction TB
-        APIGatewayService["API Gateway Service"]
-        subgraph GatewayFeatures["Gateway Features"]
-            direction TB
-            Authentication["Authentication/Authorization"]
-            RateLimiting["Rate Limiting"]
-            Caching["Response Caching"]
-            LoadBalancing["Load Balancing"]
-            CircuitBreaker["Circuit Breaker"]
-            Logging["Request Logging"]
-        end
-        APIGatewayService --> Authentication
-        APIGatewayService --> RateLimiting
-        APIGatewayService --> Caching
-        APIGatewayService --> LoadBalancing
-        APIGatewayService --> CircuitBreaker
-        APIGatewayService --> Logging
-    end
-
-    subgraph AWSCloud["AWS Cloud"]
-        direction TB
-        CloudFront["CloudFront CDN"]
+    %% AWS Cloud Infrastructure
+    subgraph AWS["AWS Cloud Infrastructure"]
+        %% Content Delivery
+        CDN["CloudFront CDN"]
         
-        subgraph ServiceLayer["Microservices Layer"]
-            AuthService["Auth Service"]
-            RestaurantService["Restaurant Service"]
-            PreferenceService["Preference Service"]
-            ReviewService["Review Service"]
-            RecommendationService["Recommendation Service"]
+        %% Frontend Hosting
+        subgraph Static["Static Hosting"]
+            S3["S3 Bucket<br/>Static Website"]
         end
         
-        subgraph DataLayer["Data Layer"]
-            DynamoDB["DynamoDB"]
-            S3["S3 Storage"]
-            ElasticCache["ElastiCache"]
-            
-            subgraph DataPartitions["Data Partitions"]
-                UserDB["User Data"]
-                RestaurantDB["Restaurant Data"]
-                ReviewDB["Review Data"]
-                PreferenceDB["Preference Data"]
+        %% Network Layer
+        subgraph Network["Network Stack"]
+            VPC["VPC"]
+            subgraph Public["Public Subnets"]
+                ALB["Application<br/>Load Balancer"]
+                IGW["Internet Gateway"]
+            end
+            subgraph Private["Private Subnets"]
+                ECS["ECS Cluster"]
+                NAT["NAT Gateway"]
             end
         end
         
-        subgraph BackgroundJobs["Background Jobs"]
-            EventBridge["EventBridge"]
-            SQS["SQS Queues"]
-            
-            subgraph CrawlingSystem["Crawling System"]
-                Scrapers["Scraping Lambdas"]
-                DataProcessor["Data Processor"]
-            end
+        %% Backend Services
+        subgraph Backend["Backend Stack"]
+            Fargate["Fargate Service<br/>FastAPI"]
+            AutoScale["Auto Scaling"]
+        end
+        
+        %% Data Layer
+        subgraph Data["Data Layer"]
+            DDB["DynamoDB<br/>Restaurant Data"]
+            Cache["ElastiCache<br/>Redis"]
+            Assets["S3<br/>Media Assets"]
         end
     end
+
+    %% Connections
+    Web --> CDN
+    Mobile --> CDN
+    WeChat --> CDN
     
-    FrontendLayer --> CloudFront
-    CloudFront --> APIGatewayLayer
-    APIGatewayLayer --> ServiceLayer
+    CDN --> S3
+    CDN --> ALB
     
-    AuthService --> UserDB
-    RestaurantService --> RestaurantDB
-    ReviewService --> ReviewDB
-    PreferenceService --> PreferenceDB
-    RecommendationService --> RestaurantDB
-    RecommendationService --> PreferenceDB
+    ALB --> Fargate
+    Fargate --> ECS
+    AutoScale --> Fargate
     
-    EventBridge --> Scrapers
-    Scrapers --> SQS
-    SQS --> DataProcessor
-    DataProcessor --> RestaurantDB
+    Fargate --> DDB
+    Fargate --> Cache
+    Fargate --> Assets
+    
+    %% Network Connections
+    IGW --> Public
+    Public --> NAT
+    NAT --> Private
+
+    %% Styling
+    classDef primary fill:#2496ed,stroke:#fff,stroke-width:2px,color:#fff
+    classDef secondary fill:#248f24,stroke:#fff,stroke-width:2px,color:#fff
+    classDef aws fill:#ff9900,stroke:#fff,stroke-width:2px,color:#fff
+    
+    class Web,Mobile,WeChat primary
+    class Fargate,ECS,AutoScale secondary
+    class CDN,S3,ALB,DDB,Cache,Assets aws
 ```
+
+### Architecture Components
+
+1. **Frontend Layer**
+   - Web Application (React)
+   - Mobile Application (React Native)
+   - WeChat Mini App
+   - All frontends share common API client library
+
+2. **Content Delivery**
+   - CloudFront CDN for global content delivery
+   - S3 bucket for static website hosting
+   - Edge caching and optimization
+
+3. **Network Stack**
+   - VPC with public and private subnets
+   - Internet Gateway for public access
+   - NAT Gateway for private subnet outbound traffic
+   - Application Load Balancer for traffic distribution
+
+4. **Backend Stack**
+   - ECS Cluster running Fargate tasks
+   - FastAPI application containerized
+   - Auto Scaling based on demand
+   - Health checks and monitoring
+
+5. **Data Layer**
+   - DynamoDB for restaurant and user data
+   - ElastiCache (Redis) for session and caching
+   - S3 for media assets and static files
 
 ## **Communication Flow**
 

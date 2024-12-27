@@ -333,42 +333,63 @@ Always use backslashes (`\`) for paths in PowerShell instead of forward slashes 
 
 ```
 smart-dine/
-├── api-gateway/           # API Gateway Service
-│   ├── src/              # Gateway source code
-│   ├── Dockerfile        # Container configuration
-│   └── requirements.txt  # Python dependencies
+├── frontend/              # Frontend Applications
+│   ├── web/              # React Native Web
+│   │   ├── src/
+│   │   └── package.json
+│   ├── mobile/           # React Native iOS
+│   │   ├── src/
+│   │   └── package.json
+│   └── wechat/           # WeChat Mini App
+│       ├── src/
+│       └── project.config.json
 │
 ├── backend/              # Backend Services
-│   ├── src/             # Backend source code
-│   ├── Dockerfile       # Container configuration
-│   └── requirements.txt # Python dependencies
+│   ├── src/             # FastAPI Application
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── models/
+│   │   └── utils/
+│   └── Dockerfile       # Container configuration
 │
-├── data-crawler-python/  # Restaurant Data Crawler
-│   ├── scripts/         # Utility scripts
-│   │   ├── commands/    # Development command scripts
-│   │   │   └── dev.ps1 # PowerShell script for dev commands
-│   │   ├── clean_db.py # Script to clean MongoDB collections
-│   │   └── setup_db.py # Script to set up MongoDB indexes
-│   ├── src/            # Crawler source code
-│   │   ├── crawler/    # Web crawler implementation
-│   │   ├── database/   # Database operations
-│   │   ├── models/     # Data models
-│   │   └── config/     # Configuration settings
-│   ├── dev.bat        # Development command runner
-│   └── README.md      # Crawler documentation
+├── infrastructure/       # AWS CDK Infrastructure
+│   ├── bin/
+│   │   └── infrastructure.ts  # CDK app entry point
+│   ├── lib/
+│   │   ├── stacks/
+│   │   │   ├── base-stack.ts      # Base stack with common props
+│   │   │   ├── network-stack.ts   # VPC and network resources
+│   │   │   ├── backend-stack.ts   # Fargate service and ALB
+│   │   │   └── frontend-stack.ts  # S3 and CloudFront
+│   │   └── constructs/           # Reusable CDK constructs
+│   ├── cdk.json
+│   └── package.json
 │
-├── frontend/            # Frontend Applications
-│   └── web/           # Web application
-│
-├── scripts/            # Project-wide scripts
-│   ├── setup.sh       # Project setup script
-│   └── restructure.sh # Code restructuring script
-│
-├── docs/              # Project documentation
-├── .github/           # GitHub configuration and workflows
-├── docker-compose.yml # Docker services configuration
-└── DEVELOPMENT.md     # This file
+└── shared/              # Shared Code/Types
+    ├── types/
+    └── constants/
 ```
+
+## AWS Infrastructure Components
+
+### Network Stack
+- VPC with public and private subnets
+- NAT Gateway for private subnet internet access
+- Internet Gateway for public subnet access
+- Network ACLs and Security Groups
+
+### Backend Stack (Fargate)
+- ECS Cluster
+- Fargate Service
+- Application Load Balancer
+- Auto Scaling configuration
+- Task Definition with container settings
+
+### Frontend Stack
+- S3 Bucket for static website hosting
+- CloudFront Distribution
+- Origin Access Identity
+- Security Headers
 
 ## Data Crawler
 
