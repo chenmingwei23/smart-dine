@@ -1,0 +1,44 @@
+{
+    "executionRoleArn": "EXECUTION_ROLE_ARN",
+    "containerDefinitions": [
+        {
+            "name": "smart-dine-dev-backend",
+            "image": "<IMAGE1_NAME>",
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "ENVIRONMENT",
+                    "value": "dev"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/aws/ecs/smart-dine-dev-backend",
+                    "awslogs-region": "ap-southeast-2",
+                    "awslogs-stream-prefix": "smart-dine-dev-backend"
+                }
+            },
+            "healthCheck": {
+                "command": ["CMD-SHELL", "curl -f http://localhost/health || exit 1"],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 60
+            }
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "256",
+    "memory": "512",
+    "family": "smart-dine-dev-backend"
+} 

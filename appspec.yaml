@@ -6,12 +6,12 @@ Resources:
         TaskDefinition: <TASK_DEFINITION>
         LoadBalancerInfo:
           ContainerName: "smart-dine-dev-backend"
-          ContainerPort: 3000
+          ContainerPort: 80
         PlatformVersion: "LATEST"
         NetworkConfiguration:
           AwsvpcConfiguration:
-            Subnets: ["<SUBNET_1>", "<SUBNET_2>"]
-            SecurityGroups: ["<SECURITY_GROUP>"]
+            Subnets: ["subnet-08ed930771bcdbcaf", "subnet-0701cc5a71761e9f5"]
+            SecurityGroups: ["${SECURITY_GROUP}"]
             AssignPublicIp: "DISABLED"
 Hooks:
   - BeforeInstall: "LambdaFunctionToValidateBeforeInstall"
