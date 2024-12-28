@@ -24,14 +24,16 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - cd ..
-      - printf '{"containerDefinitions":[{"name":"smart-dine-dev-backend","imageUri":"%s"}]}' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
-      - cat imageDefinitions.json
-      # Create build artifacts directory
+      - echo Creating build artifacts directory...
       - mkdir -p build_artifacts
-      - cp imageDefinitions.json build_artifacts/
+      # Create the image definitions file
+      - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > build_artifacts/imageDefinitions.json
+      # Copy deployment files
       - cp appspec.yaml build_artifacts/
       - cp taskdef.json build_artifacts/
-      - ls -la build_artifacts/
+      # Update task definition with the new image
+      - sed -i.bak -e "s|<IMAGE1_NAME>|$REPOSITORY_URI:$IMAGE_TAG|g" build_artifacts/taskdef.json
+      - cat build_artifacts/taskdef.json
 
 artifacts:
   files:
