@@ -2,7 +2,24 @@
 !jest.config.js
 *.d.ts
 node_modules
+.vscode/
+.idea/
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# Parcel default cache directory
+.parcel-cache
+
+# Build output
+dist/
+
+# Environment variables
+.env*
+
+# npm debug logs
+npm-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
