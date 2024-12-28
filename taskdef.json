@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "smart-dine-dev-backend",
-            "image": "<IMAGE1_NAME>",
+            "image": "<IMAGE_NAME>",
             "essential": true,
             "portMappings": [
                 {
