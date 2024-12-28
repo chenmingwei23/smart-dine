@@ -285,7 +285,7 @@ export class BackendStack extends BaseStack {
             taskDefinitionTemplateFile: buildOutput.atPath('taskdef.json'),
             containerImageInputs: [{
                 input: buildOutput,
-                taskDefinitionPlaceholder: 'IMAGE1_NAME',
+                taskDefinitionPlaceholder: '<IMAGE1_NAME>',
             }],
             runOrder: 1
         });
@@ -309,8 +309,6 @@ export class BackendStack extends BaseStack {
                 },
             ],
         });
-
-        console.log(pipeline.role);
 
         // Grant pipeline role permission to read the GitHub token
         githubToken.grantRead(pipeline.role);
