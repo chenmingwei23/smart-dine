@@ -27,12 +27,12 @@ phases:
       - echo Creating build artifacts directory...
       - mkdir -p build_artifacts
       # Create the image definitions file
-      - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > build_artifacts/imageDefinitions.json
+      - printf '{"containerDefinitions":[{"name":"smart-dine-dev-backend","imageUri":"%s"}]}' $REPOSITORY_URI:$IMAGE_TAG > build_artifacts/imageDefinitions.json
       # Copy deployment files
       - cp appspec.yaml build_artifacts/
       - cp taskdef.json build_artifacts/
       # Update task definition with the new image
-      - sed -i.bak -e "s|IMAGE_NAME|$REPOSITORY_URI:$IMAGE_TAG|g" build_artifacts/taskdef.json
+      - sed -i.bak -e "s|<IMAGE_NAME>|$REPOSITORY_URI:$IMAGE_TAG|g" build_artifacts/taskdef.json
       - cat build_artifacts/taskdef.json
 
 artifacts:
