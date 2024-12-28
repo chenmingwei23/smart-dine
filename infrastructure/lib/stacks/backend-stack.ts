@@ -285,7 +285,7 @@ export class BackendStack extends BaseStack {
             taskDefinitionTemplateFile: buildOutput.atPath('taskdef.json'),
             containerImageInputs: [{
                 input: buildOutput,
-                taskDefinitionPlaceholder: 'PLACEHOLDER',
+                taskDefinitionPlaceholder: 'PLACEHOLDER'
             }],
             runOrder: 1
         });
