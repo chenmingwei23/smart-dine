@@ -26,10 +26,16 @@ phases:
       - cd ..
       - printf '{"containerDefinitions":[{"name":"smart-dine-dev-backend","imageUri":"%s"}]}' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
       - cat imageDefinitions.json
+      # Create build artifacts directory
+      - mkdir -p build_artifacts
+      - cp imageDefinitions.json build_artifacts/
+      - cp appspec.yaml build_artifacts/
+      - cp taskdef.json build_artifacts/
+      - ls -la build_artifacts/
 
 artifacts:
   files:
     - imageDefinitions.json
     - appspec.yaml
     - taskdef.json
-  base-directory: $CODEBUILD_SRC_DIR 
+  base-directory: build_artifacts 
