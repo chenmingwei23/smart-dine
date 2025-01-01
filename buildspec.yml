@@ -34,9 +34,9 @@ phases:
       # Copy deployment files
       - cp appspec.yaml build_artifacts/
       - cp taskdef.json build_artifacts/
-      # Update task definition with the new image
-      - jq --arg IMAGE "$FULL_IMAGE_URI" '.containerDefinitions[0].image = $IMAGE' taskdef.json > build_artifacts/taskdef.json
-      - cat build_artifacts/taskdef.json
+      # Do not modify taskdef.json - let CodeDeploy handle the substitution
+      - cp taskdef.json build_artifacts/
+      - cat build_artifacts/imageDetail.json
 
 artifacts:
   files:
