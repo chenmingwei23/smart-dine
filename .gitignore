@@ -52,3 +52,6 @@ infrastructure/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Project specific
+CURRENT_STATUS.md
