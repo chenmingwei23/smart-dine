@@ -283,10 +283,6 @@ export class BackendStack extends BaseStack {
             deploymentGroup,
             appSpecTemplateFile: buildOutput.atPath('appspec.yaml'),
             taskDefinitionTemplateFile: buildOutput.atPath('taskdef.json'),
-            containerImageInputs: [{
-                input: buildOutput,
-                taskDefinitionPlaceholder: '<IMAGE_NAME>',
-            }],
             runOrder: 1
         });
 

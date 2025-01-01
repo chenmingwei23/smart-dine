@@ -3,10 +3,13 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - echo Installing dependencies...
+      - apt-get update && apt-get install -y jq
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - FULL_IMAGE_URI=$REPOSITORY_URI:$IMAGE_TAG
       - echo Checking deployment files...
       - ls -la
   build:
@@ -27,12 +30,12 @@ phases:
       - echo Creating build artifacts directory...
       - mkdir -p build_artifacts
       # Create the image definitions file
-      - printf '[{"name":"smart-dine-dev-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > build_artifacts/imageDefinitions.json
+      - printf '[{"name":"smart-dine-dev-backend","imageUri":"%s"}]' $FULL_IMAGE_URI > build_artifacts/imageDefinitions.json
       # Copy deployment files
       - cp appspec.yaml build_artifacts/
       - cp taskdef.json build_artifacts/
       # Update task definition with the new image
-      - sed -i.bak -e "s|<IMAGE_NAME>|$REPOSITORY_URI:$IMAGE_TAG|g" build_artifacts/taskdef.json
+      - jq --arg IMAGE "$FULL_IMAGE_URI" '.containerDefinitions[0].image = $IMAGE' taskdef.json > build_artifacts/taskdef.json
       - cat build_artifacts/taskdef.json
 
 artifacts:

@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "smart-dine-dev-backend",
-            "image": "<IMAGE_NAME>",
+            "image": "863518414064.dkr.ecr.ap-southeast-2.amazonaws.com/smart-dine-dev-backend:latest",
             "essential": true,
             "portMappings": [
                 {
